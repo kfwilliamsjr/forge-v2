@@ -1,0 +1,59 @@
+# CDFI Standard — looser profile for mission-driven lenders (CIF, Swift Capital baseline)
+# Inherits structure from Colony Bank profile with overrides where CDFIs accept more risk.
+# Edit per-client overrides in a separate file (e.g., rules_cif.yaml) that extends this one.
+
+profile:
+  name: "CDFI Standard"
+  version: "2026-04-07"
+  applies_to: ["sba_7a", "owner_occupied_cre", "cdfi_direct"]
+
+thresholds:
+  borrower_dscr_min: 1.15           # CDFIs accept lower DSCR
+  global_dscr_min: 1.05
+  global_dscr_min_after_rate_shock: 0.95
+  rate_shock_bps: 300
+  fico_min: 600                     # CDFIs serve credit-impaired borrowers
+  equity_injection_min_pct: 0.05    # 5% vs 10% bank standard
+  liquidity_months_min: 3
+  liquidity_months_preferred: 6
+
+collateral_margins:
+  improved_cre: 0.85
+  unimproved_cre: 0.50
+  new_machinery_equipment: 0.75
+  used_me_nbv: 0.50
+  used_me_olv: 0.80
+  furniture_fixtures: 0.10
+
+ineligible_industries: []           # CDFI mission may include otherwise-excluded industries
+
+mission_indicators:
+  - "Minority-owned business"
+  - "Woman-owned business"
+  - "Veteran-owned business"
+  - "Located in LMI census tract"
+  - "Serves LMI community"
+
+hard_stops:
+  - id: "HS-001"
+    description: "DSCR below 1.00 borrower"
+    test: "borrower_dscr < 1.00"
+    severity: "decline"
+  - id: "HS-002"
+    description: "FICO below 580"
+    test: "fico < 580"
+    severity: "decline"
+
+soft_flags:
+  - id: "SF-001"
+    description: "DSCR below 1.15 — needs mission justification"
+    test: "borrower_dscr < 1.15"
+    severity: "condition"
+  - id: "SF-002"
+    description: "FICO below 640 — character LOE required"
+    test: "fico < 640"
+    severity: "condition"
+  - id: "SF-003"
+    description: "No mission alignment documented"
+    test: "mission_indicators_count == 0"
+    severity: "condition"

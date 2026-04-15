@@ -1,0 +1,81 @@
+# Colony Bank SBSL — default underwriting policy profile
+# Source: SBSL Loan Grids (Approved) updated 2026-03-24
+# This file is the SOURCE OF TRUTH for the engine. Edit here, not in code.
+
+profile:
+  name: "Colony Bank SBSL"
+  version: "2026-03-24"
+  applies_to: ["sba_7a", "owner_occupied_cre"]
+
+thresholds:
+  borrower_dscr_min: 1.25
+  global_dscr_min: 1.10
+  global_dscr_min_after_rate_shock: 1.00
+  rate_shock_bps: 300
+  fico_min: 675
+  equity_injection_min_pct: 0.10
+  liquidity_months_min: 6
+  liquidity_months_preferred: 12
+
+collateral_margins:
+  improved_cre: 0.85
+  unimproved_cre: 0.50
+  new_machinery_equipment: 0.75
+  used_me_nbv: 0.50
+  used_me_olv: 0.80
+  furniture_fixtures: 0.10
+
+ineligible_industries:
+  - nursing_homes
+  - assisted_living
+  - golf_courses
+  - cannabis
+
+footprint_rules:
+  - rule: "70%+ guarantee deals → nationwide"
+    condition: "sba_guarantee_pct >= 0.70"
+    eligible_states: "ALL"
+  - rule: "All other deals → Southeast US only"
+    condition: "sba_guarantee_pct < 0.70"
+    eligible_states: ["AL","FL","GA","KY","LA","MS","NC","SC","TN","VA","WV"]
+
+top_tier_indicators:
+  - "CRE-secured covering 75%+ of project costs"
+  - "Professional practices (medical, dental, legal, accounting)"
+  - "Franchise concept with FUND score 750+"
+
+hard_stops:
+  - id: "HS-001"
+    description: "DSCR below 1.10 borrower"
+    test: "borrower_dscr < 1.10"
+    severity: "decline"
+  - id: "HS-002"
+    description: "Global DSCR below 1.00"
+    test: "global_dscr < 1.00"
+    severity: "decline"
+  - id: "HS-003"
+    description: "FICO below 640"
+    test: "fico < 640"
+    severity: "decline"
+  - id: "HS-004"
+    description: "Industry on ineligible list"
+    test: "industry in ineligible_industries"
+    severity: "decline"
+
+soft_flags:
+  - id: "SF-001"
+    description: "DSCR between 1.10 and 1.25 — borderline, needs strong mitigants"
+    test: "1.10 <= borrower_dscr < 1.25"
+    severity: "condition"
+  - id: "SF-002"
+    description: "Global DSCR between 1.00 and 1.10 — borderline"
+    test: "1.00 <= global_dscr < 1.10"
+    severity: "condition"
+  - id: "SF-003"
+    description: "Liquidity below 6 months"
+    test: "liquidity_months < 6"
+    severity: "condition"
+  - id: "SF-004"
+    description: "Equity injection below 10%"
+    test: "equity_injection_pct < 0.10"
+    severity: "condition"

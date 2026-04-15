@@ -36,5 +36,6 @@ portfolio/pending_updates.json
 # LibreOffice lock files
 .~lock.*#
 
-# Legacy embedded repo — do not track (contains its own .git)
-_legacy_forge/underwriteos/
+# Legacy embedded repo — track contents, not its .git metadata
+_legacy_forge/underwriteos/.git/
+_legacy_forge/underwriteos/.git_bak/

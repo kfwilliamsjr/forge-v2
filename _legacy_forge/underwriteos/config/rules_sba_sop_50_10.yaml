@@ -1,0 +1,80 @@
+# SBA SOP 50-10-8 — Hard rules that govern ALL SBA loans regardless of lender profile
+# Source: SOP 50 10 8 Technical Updates effective 6.1.2025
+# These rules trump any lender profile. If SOP says no, the deal is no.
+# URL: https://www.sba.gov/document/sop-50-10-lender-development-company-loan-programs
+
+profile:
+  name: "SBA SOP 50-10-8"
+  version: "2025-06-01"
+  authority: "Final — overrides any lender profile"
+
+eligibility_hard_stops:
+  - id: "SOP-001"
+    description: "Business must be for-profit"
+    test: "entity_type == 'nonprofit'"
+    severity: "decline"
+  - id: "SOP-002"
+    description: "Business must be located and operating in the United States"
+    test: "primary_location_country != 'US'"
+    severity: "decline"
+  - id: "SOP-003"
+    description: "Business must meet SBA size standards"
+    test: "exceeds_size_standard == True"
+    severity: "decline"
+  - id: "SOP-004"
+    description: "Owner cannot be on SBA Form 912 ineligible list"
+    test: "form_912_ineligible == True"
+    severity: "decline"
+  - id: "SOP-005"
+    description: "No prior loss to government on a federal loan"
+    test: "prior_government_loss == True"
+    severity: "decline"
+
+ineligible_business_types:
+  - "Speculative real estate"
+  - "Pyramid sales / multi-level marketing as primary business"
+  - "Gambling (more than 1/3 of revenue from gambling)"
+  - "Cannabis (federal Schedule I)"
+  - "Lending businesses (banks, finance companies, factors, leasing companies)"
+  - "Life insurance companies"
+  - "Religious organizations"
+  - "Government-owned entities"
+  - "Businesses primarily engaged in political or lobbying activities"
+
+use_of_proceeds_eligible:
+  - "Working capital"
+  - "Purchase of machinery and equipment"
+  - "Purchase of inventory"
+  - "Purchase of real estate (owner-occupied)"
+  - "Construction of new building"
+  - "Renovation of existing building"
+  - "Refinance of qualifying business debt"
+  - "Business acquisition"
+  - "Partner buyout"
+  - "Leasehold improvements"
+
+use_of_proceeds_ineligible:
+  - "Refinance of debt that benefitted owner personally"
+  - "Repayment of delinquent taxes (with limited exceptions)"
+  - "Distribution to owner"
+  - "Investment in non-business assets"
+
+character:
+  form_912_required: true
+  loe_required_when:
+    - "Any criminal arrest, indictment, or conviction (felony or misdemeanor)"
+    - "Pending criminal charges"
+    - "Probation or parole status"
+    - "Bankruptcy within last 7 years"
+    - "Tax liens (resolved or unresolved)"
+    - "Judgments"
+    - "Charge-offs over $1,000"
+
+guarantee_requirements:
+  - "All owners of 20% or more must personally guarantee"
+  - "Spouse of 20%+ owner must guarantee if jointly owned assets pledged"
+
+collateral_requirements:
+  threshold: "Loans over $50,000 require collateral to the extent available"
+  fully_secured_threshold: 500000
+  description: "Loans up to $500K do not require additional collateral if business assets do not fully secure. Above $500K, lender must take available collateral up to loan amount."
