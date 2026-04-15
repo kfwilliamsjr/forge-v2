@@ -1,0 +1,11 @@
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"extract_sba_deal_parameters","policy_version":"1.0.0","verdict":"proceed","colony_excluded":true}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"score_inbound_leads","score":58,"tier":3}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"screen_sba_character_loe_needed","halt_until_credit_pulled":true}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"calculate_broker_commission","rate":0.02,"amount_range":[7000,12000]}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"calculate_business_cash_flow","scenario":"low","dscr":0.42,"verdict":"FAIL"}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"calculate_business_cash_flow","scenario":"high","dscr":2.28,"verdict":"PASS"}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"calculate_global_cash_flow","scenario":"low","dscr":1.37,"verdict":"PASS"}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"calculate_global_cash_flow","scenario":"high","dscr":2.51,"verdict":"PASS"}
+{"ts":"2026-04-15","deal_id":"TARVER_2026-04","skill":"match_colony_grid","status":"halt","reason":"colony_employment_conflict"}
+{"ts":"2026-04-15T00:00:00Z","skill":"calculate_business_cash_flow","engine":"underwriteos.cashflow","scenario":"low","loan":350000,"term_months":120,"rate":0.115,"bani":"31500.00","ads":"59050.08","shocked_ads":"66480.48","borrower_dscr":"0.53","global_dscr":"1.58","rate_shock_borrower_dscr":"0.47","verdicts":{"borrower_dscr":"FAIL","global_dscr":"PASS","rate_shock":"FAIL"}}
+{"ts":"2026-04-15T00:00:00Z","skill":"calculate_business_cash_flow","engine":"underwriteos.cashflow","scenario":"high","loan":350000,"term_months":120,"rate":0.115,"bani":"172800.00","ads":"59050.08","shocked_ads":"66480.48","borrower_dscr":"2.93","global_dscr":"2.90","rate_shock_borrower_dscr":"2.60","verdicts":{"borrower_dscr":"PASS","global_dscr":"PASS","rate_shock":"PASS"}}

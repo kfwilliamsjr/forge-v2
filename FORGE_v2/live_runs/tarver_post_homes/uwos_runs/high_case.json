@@ -1,0 +1,29 @@
+{
+  "deal_id": "TARVER_2026-04_HIGH",
+  "business": {
+    "year": 2025,
+    "revenue": 345600,
+    "operating_expenses": 172800,
+    "depreciation": 0,
+    "amortization": 0,
+    "interest_expense": 0,
+    "net_income": 172800,
+    "owner_compensation": 0
+  },
+  "new_loan": {
+    "lender": "new_sba_loan",
+    "principal": 350000,
+    "annual_rate": 0.115,
+    "term_months": 120,
+    "rate_type": "variable"
+  },
+  "existing_debts": [],
+  "personal": {
+    "name": "Christie Tarver",
+    "annual_w2_income": 137500,
+    "other_income": 0,
+    "annual_personal_debt_service": 12000,
+    "annual_living_expenses": 36000,
+    "liquid_assets": 0
+  }
+}

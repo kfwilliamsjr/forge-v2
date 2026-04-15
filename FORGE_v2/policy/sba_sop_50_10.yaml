@@ -1,0 +1,212 @@
+# SBA SOP 50-10 — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Master reference: https://www.sba.gov/document/sop-50-10-lender-development-company-loan-programs
+# This YAML captures the SBA rules this system enforces. When SBA revises SOP, bump version.
+
+policy_version: 1.0.0
+sop_version_referenced: "SOP 50-10 current (as of 2026-04-15)"
+effective_date: 2026-04-15
+owner: Keith Williams
+
+# =====================================================================
+# GOVERNING AUTHORITY
+# =====================================================================
+governing_rule: |
+  When SOP 50-10 conflicts with a lender grid, the SOP governs.
+  When a lender grid is silent on an eligibility point, default to SOP.
+  All character determinations defer to SOP 50-10 Chapter on Character Determination.
+
+# =====================================================================
+# CHARACTER DETERMINATION TRIGGERS — Form 912 / LOE required
+# Used by: screen_sba_character_loe_needed
+# =====================================================================
+character_triggers:
+  criminal:
+    felony_any_time:
+      requires: [Form_912, LOE, lender_character_review]
+      blocker: conditional   # SBA review required
+    misdemeanor_last_10yr:
+      requires: [Form_912, LOE]
+      blocker: no
+    arrest_no_conviction:
+      requires: [Form_912, LOE]
+      blocker: no
+    incarcerated_or_probation_parole:
+      requires: [Form_912, LOE, lender_character_review]
+      blocker: yes   # SBA generally declines
+    sex_offense_any:
+      blocker: absolute   # auto-decline
+    domestic_terrorism_or_treason:
+      blocker: absolute
+
+  credit_derogatory:
+    open_collection_gt_1000:
+      requires: [LOE]
+    charge_off_last_3yr:
+      requires: [LOE]
+    judgment_unsatisfied:
+      requires: [LOE, satisfaction_plan]
+      blocker: conditional
+    tax_lien_unsatisfied:
+      requires: [LOE, IRS_payment_plan_doc]
+      blocker: yes_until_satisfied_or_plan_in_place
+    bankruptcy_ch7_last_7yr:
+      requires: [LOE, discharge_papers]
+    bankruptcy_ch13_last_3yr:
+      requires: [LOE, discharge_papers]
+    bankruptcy_gt_7yr:
+      requires: [LOE]
+    foreclosure_last_7yr:
+      requires: [LOE]
+    prior_sba_loan_default:
+      requires: [LOE, CAIVRS_check]
+      blocker: yes_if_caivrs_active
+
+  financial_other:
+    prior_gov_loan_default_any:
+      requires: [CAIVRS_check]
+      blocker: yes_if_caivrs_active
+    child_support_delinquent:
+      blocker: yes_until_current
+
+# =====================================================================
+# CAIVRS (Credit Alert Verification Reporting System)
+# =====================================================================
+caivrs:
+  required_for: "all SBA-backed loans, all 20%+ owners"
+  active_hit_action: "HALT — cannot close SBA-backed loan until cleared"
+
+# =====================================================================
+# ELIGIBILITY — INELIGIBLE BUSINESSES (partial list, SOP-governed)
+# =====================================================================
+ineligible_businesses:
+  - passive_businesses   # rental real estate held passively
+  - non_profits
+  - speculative_businesses
+  - pyramid_sales_plans
+  - illegal_activities   # cannabis (federal), etc.
+  - government_owned_entities
+  - loan_packagers_as_primary_business
+  - life_insurance_companies
+  - businesses_located_outside_us
+  - religious_businesses_primarily_teaching
+  - gambling_businesses_gross_gaming_gt_1_3
+  - adult_entertainment_prurient
+
+# =====================================================================
+# USE OF PROCEEDS (allowed on SBA 7(a))
+# =====================================================================
+allowed_use_of_proceeds:
+  - working_capital
+  - equipment_purchase
+  - inventory
+  - leasehold_improvements
+  - business_acquisition
+  - partner_buyout
+  - refinance_qualifying_debt   # with test: 10% cash flow improvement OR unreasonable terms
+  - commercial_real_estate_purchase
+  - construction_renovation
+  - franchise_fees
+
+prohibited_use_of_proceeds:
+  - personal_use
+  - paying_delinquent_federal_taxes   # unless payment plan + non-proceeds source
+  - investment_purposes
+  - speculation
+  - refinance_debt_where_lender_would_sustain_loss
+
+# =====================================================================
+# COLLATERAL MARGINS — SBA (mirror of colony_grids for SOP alignment)
+# =====================================================================
+collateral_margins_sba:
+  improved_cre: 0.85
+  unimproved_cre: 0.50
+  new_me: 0.75
+  used_me_nbv: 0.50
+  used_me_olv: 0.80
+  furniture_fixtures: 0.10
+  accounts_receivable: 0.50   # <90 days
+  inventory: 0.25   # cost
+  stock_marketable: 0.50
+
+# =====================================================================
+# PERSONAL GUARANTY
+# =====================================================================
+personal_guaranty:
+  required_threshold_pct: 0.20   # any owner 20%+ must PG
+  limited_guaranty_allowed: true
+  spousal_guaranty_rule: "Spouse must PG if combined ownership reaches 20%+"
+
+# =====================================================================
+# EQUITY INJECTION
+# =====================================================================
+equity_injection:
+  startup_min: 0.10
+  business_acquisition_min: 0.10
+  change_of_ownership_min: 0.10
+  seller_note_standby_allowed: true
+  seller_note_standby_min_years: 2
+  seller_note_counts_as_equity_when_standby: true   # up to half of equity injection
+  verification_required: "2 months bank statements showing seasoned funds"
+
+# =====================================================================
+# FRANCHISE / SBA FRANCHISE DIRECTORY
+# =====================================================================
+franchise:
+  directory_ref: "SBA Franchise Directory (must be listed)"
+  fdd_required: true
+  fund_score_reference: true   # FRANdata FUND score used by Colony/many lenders
+
+# =====================================================================
+# AFFILIATION & SIZE STANDARDS
+# =====================================================================
+size_standards:
+  default_rule: "NAICS-based; lender verifies with SBA Table of Small Business Size Standards"
+  alternative_size_standard:
+    tangible_net_worth_max: 20000000
+    avg_net_income_max: 6500000
+  affiliation_aggregated: true
+
+# =====================================================================
+# FORM 159 — FEE DISCLOSURE
+# =====================================================================
+form_159:
+  required_when: "any agent/broker compensation paid in connection with SBA loan"
+  signatories: [borrower, agent_broker]
+  submission: "with loan package to lender"
+  cdfi_non_sba_loan_exception: "Not required for non-SBA-backed CDFI loan, but separate engagement letter still required for borrower-paid fees"
+
+# =====================================================================
+# LOAN LIMITS (7a)
+# =====================================================================
+loan_limits_7a:
+  max_loan_amount: 5000000
+  max_guaranty_amount: 3750000   # 75% of $5M
+  guaranty_pct_standard:
+    loan_le_150k: 0.85
+    loan_gt_150k: 0.75
+  sba_express_max: 500000
+  sba_express_guaranty_pct: 0.50
+
+# =====================================================================
+# BROKER / AGENT RULES
+# =====================================================================
+broker_rules:
+  form_159_mandatory: true
+  fee_reasonableness_test: "2% on first $50K, 1.5% $50K-$1M, 1% >$1M (soft guidance)"
+  prohibited_from_loan_proceeds_on: ["packaging fee portion that is excessive per lender review"]
+  referral_fee_source: "must come from lender commission or borrower direct, never double-dipped"
+
+# =====================================================================
+# CHARACTER REVIEW WORKFLOW
+# =====================================================================
+character_review_workflow:
+  lender_level:
+    - pull_credit_report_primary_bureau_experian
+    - pull_caivrs_all_owners_20pct
+    - Form_912_for_each_owner_20pct
+    - LOE_for_each_disclosed_item
+    - decision: "approve / decline / submit_to_sba_for_character_review"
+  sba_level:
+    required_when: [felony_any, incarcerated, probation_parole, major_unresolved_character_flag]
+    processing_time_days: [10, 45]

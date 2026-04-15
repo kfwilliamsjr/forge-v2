@@ -1,0 +1,190 @@
+# CIF Underwriting Procedures — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Master reference: ~/Desktop/Swift Capital Underwriting/Credit Policy/CIF_UNDERWRITING_PROCEDURES.md
+# This YAML is the SINGLE SOURCE OF TRUTH. No CIF threshold is hardcoded in any skill.
+
+policy_version: 1.0.0
+effective_date: 2026-04-15
+source: "CIF_UNDERWRITING_PROCEDURES.md (consolidated from 5 PDFs 2026-03-31)"
+owner: Keith Williams (for Swift Capital / CIF)
+
+product_types:
+  festival_loan:
+    cap: 50000
+    term_months_typical: 12
+    purpose: "Microloan for festival/carnival vendor preparation (VI festivals)"
+  vi_leap_grant:
+    min_amount: 5000
+    max_amount: 15000
+    repayable: false
+    purpose: "Grant for disadvantaged USVI entrepreneurs"
+  regular_loan:
+    cap: 250000
+    term_months_typical: [36, 60, 84, 120]
+    purpose: "CIF standard business loan"
+
+intake_checklists:
+  festival_loan:
+    sections:
+      I_application:
+        - "Loan Application"
+        - "Festival Readiness Assessment Form"
+        - "Credit Report"  # pulled by CIF
+        - "Photo ID"
+        - "Entity Docs (Articles/Bylaws or DBA cert)"
+        - "Business License / Vendor Permit"
+        - "W-9"
+      II_financials:
+        - "Bank Statements (3 months business)"
+        - "Bank Statements (3 months personal)"
+        - "Most Recent Tax Return"
+        - "Personal Financial Statement"
+        - "Vendor invoices / cost estimates"
+    blockers: ["Loan Application", "Credit Report", "Most Recent Tax Return", "Entity Docs (Articles/Bylaws or DBA cert)"]
+    credit_report_source: CIF  # CIF pulls, not borrower-supplied
+
+  vi_leap_grant:
+    essential:
+      - "Grant Application"
+      - "Business Plan or Narrative"
+      - "Entity Docs"
+      - "Business License"
+      - "Most Recent Tax Return"
+      - "Bank Statements (3-6 months)"
+      - "Photo ID"
+    vendor:
+      - "Vendor Quotes/Invoices"
+      - "Vendor Contracts"
+      - "Wiring Instructions"
+    blockers: ["Grant Application", "Business Plan or Narrative", "Entity Docs", "Bank Statements (3-6 months)"]
+
+  regular_loan:
+    standard:
+      - "Loan Application (CIF format)"
+      - "Business Plan or Executive Summary"
+      - "Entity Formation Docs"
+      - "Business License"
+      - "3 Years Business Tax Returns"
+      - "3 Years Personal Tax Returns"
+      - "Year-to-Date P&L"
+      - "Balance Sheet"
+      - "Bank Statements (6-12 months business)"
+      - "Personal Financial Statement"
+      - "Debt Schedule"
+      - "Credit Report"
+      - "Photo ID"
+    construction_conditional:
+      - "Construction Budget"
+      - "Contractor Bids/Estimates"
+      - "Permits/Approvals"
+      - "Environmental Reports"
+      - "Plans/Blueprints"
+    blockers:
+      - "Loan Application (CIF format)"
+      - "Credit Report"
+      - "3 Years Business Tax Returns"
+      - "Entity Formation Docs"
+      - "Bank Statements (6-12 months business)"
+
+readiness_thresholds:
+  ready_for_cashflow: 90
+  flag_draft_doc_request: 70
+  halt_full_request: 69  # any score ≤ 69 halts and triggers full doc request
+
+dscr:
+  business_threshold: 1.25   # Base borrower DSCR floor
+  global_threshold: 1.10     # Global DSCR floor
+  stress_combined_threshold: 1.10
+  stress_severe_revenue_threshold: 1.00   # Rev -20% breakeven
+  rate_shock_bps: 300
+  post_rate_shock_threshold: 1.00   # variable-rate deals
+
+living_expenses:
+  usvi_hoh_floor_annual: 24000   # $24K/yr = $2K/mo
+  rule: "Use HIGHER of borrower-stated PFS amount OR floor"
+
+debt_service_cleanup:
+  small_balance_zero_threshold: 500
+  zero_out_authorized_user_accounts: true
+  primary_bureau: "Experian"
+
+addbacks:
+  depreciation: always
+  amortization: always
+  interest_expense: "only if refinanced by new loan"
+  owner_compensation:
+    cif_lane: never                 # CIF default — owner comp flows to personal layer via W-2/K-1
+    sba_lane: conditional           # SBA/Colony — case-by-case, gated on explicit fixture flag
+    sba_gating_rules:
+      - "Only add back if borrower is sole or majority owner AND replacement W-2 salary is modeled as a separate operating expense on the go-forward P&L"
+      - "Only add back if owner_compensation was a discretionary distribution, not market-rate salary"
+      - "Never add back when owner-comp is already deducted on the tax return as W-2 wages (1120-S Line 7) and the lender is not normalizing to an industry average"
+      - "Must be documented in the fixture with `owner_compensation_addback: true` AND a `_note_owner_comp` field explaining the rationale"
+      - "Default (flag absent or false): DO NOT add back"
+    audit_cases:
+      - deal: AIPSS_2026-03
+        decision: NO_ADDBACK
+        rationale: "Colony kept $285K W-2 as operating deduction; BANI = NI + D + A + Int only. Y1 BDSCR = 1.23x"
+      - deal: MIRZAI_2026-01
+        decision: NO_ADDBACK
+        rationale: "Y1 $25K replacement salary modeled separately in memo. No Y1 owner-comp addback. Y1 BDSCR = 1.39x"
+  one_time_expenses: "only if documented non-recurring + Keith approval"
+  required_distributions:
+    rule: "Deduct from BANI when owner's tax liability on pass-through income is funded by mandatory K-1 distribution. Captures tax allocation for S-corp / LLC."
+    example: "Mirzai 2026-01 — $119 tax allocation on Y1 pass-through income"
+
+filename_regex:
+  application: "application|app"
+  readiness: "readiness"
+  credit: "credit"
+  id: "ID|license|DL|passport"
+  entity: "articles|bylaws|operating|formation|DBA"
+  business_license: "business license|vendor permit"
+  w9: "W-?9"
+  bank: "bank|statement"
+  tax: "tax|1040|1120|1065"
+  pfs: "PFS|personal.financial"
+  invoice: "invoice|quote|estimate"
+  contract: "contract"
+  wiring: "wiring|wire"
+  pnl: "P&L|profit|income.statement"
+  balance_sheet: "balance.sheet"
+  debt_schedule: "debt.schedule"
+  business_plan: "business.plan"
+
+committee:
+  executive_director:
+    name: "Patricia T. Morris"
+    email: "pat.morris@cifvi.org"
+  cfo:
+    name: "Ronnie Johnson"
+    email: "ronnie.johnson@cifvi.org"
+  development_manager:
+    name: "T. Omi Pennick"
+    email: "omi.pennick@cifvi.org"
+
+approval_workflow:
+  stage_a:
+    description: "Submit to Akem for review"
+    to: ["akem.durand@cifvi.org"]
+    cc: ["nikky.cole@cifvi.org", "keith@swiftcapitoptions.com"]
+    attachments_required: ["docx","pdf","xlsx"]
+  stage_b:
+    description: "Forward to committee after Akem approves"
+    to: ["pat.morris@cifvi.org","ronnie.johnson@cifvi.org","omi.pennick@cifvi.org"]
+    cc: ["akem.durand@cifvi.org","nikky.cole@cifvi.org","keith@swiftcapitoptions.com"]
+    attachments_required: ["docx","pdf","xlsx"]
+
+document_retention:
+  borrower_pii_delete_after_days: 30   # after committee_decision date
+  keep_permanent: ["deal_data.json","docx","pdf","xlsx","notes.md"]
+  delete_after_window:
+    - "tax returns (1040/1120/1065/Sched C/K-1)"
+    - "credit reports"
+    - "bank statements"
+    - "personal financial statements"
+    - "any doc with SSN/EIN/account#/credit score"
+
+mcp_routing:
+  email: "chrome_mcp"   # HARD RULE: Swift Capital uses Chrome MCP, NEVER Gmail MCP
+  sharefile: "chrome_mcp"

@@ -1,0 +1,116 @@
+# policy_sources.yaml — provenance index
+# Maps every compiled policy YAML to its original source document(s).
+# When source is updated, the weekly memory-consolidation task flags the YAML
+# as stale if source mtime > YAML last_synced date.
+#
+# Rule: source docs are READ-ONLY archives. YAML is the operational truth.
+# Keith owns the interpretation (the YAML). Client owns the source.
+
+version: 1.0.0
+last_reviewed: 2026-04-15
+
+policies:
+
+  cif_procedures.yaml:
+    owner: keith_williams
+    lane: cif_uw | cif_festival | cif_grant
+    sources:
+      - path: "~/Desktop/Swift Capital Underwriting/Credit Policy/CIF Policies & Procedures.docx"
+        type: docx
+        provenance: client_supplied
+        last_synced: 2026-03-31
+      - path: "~/Desktop/Swift Capital Underwriting/Credit Policy/Grant Guidelines.pdf"
+        type: pdf
+        provenance: client_supplied
+        last_synced: 2026-03-31
+      - path: "~/Desktop/Swift Capital Underwriting/Credit Policy/CIF_UNDERWRITING_PROCEDURES.md"
+        type: md
+        provenance: keith_interpretation
+        mirror_to: "Agentic_Overhaul/operations/references/CIF_UNDERWRITING_PROCEDURES.md"
+        last_synced: 2026-03-31
+    notes: |
+      CIF P&P DOCX + Grant Guidelines PDF stay in Swift folder as read-only client archives.
+      CIF_UNDERWRITING_PROCEDURES.md is Keith's interpretation — mirror into operations/references/
+      so it's contract-portable. If CIF contract ends, the interpretation stays with Keith.
+
+  colony_grids.yaml:
+    owner: keith_williams
+    lane: sba_broker
+    sources:
+      - path: "SBA_Lending_Claude_MD/knowledge-base/lender-grids/colony-bank/"
+        type: directory
+        provenance: colony_employment
+        last_synced: 2026-03-24
+        caveat: |
+          Employment conflict — Colony is NEVER a broker target. Grids are used
+          only as a baseline reference for policy calibration. Do not route any
+          brokered deal to Colony.
+
+  sba_sop_50_10.yaml:
+    owner: sba_gov
+    lane: all_sba
+    sources:
+      - path: https://www.sba.gov/document/sop-50-10-lender-development-company-loan-programs
+        type: url
+        provenance: public_federal
+        last_synced: 2026-03-01
+    notes: |
+      Governing authority for all SBA 7(a) / 504 lending. Refresh on SBA revisions.
+      When SOP conflicts with a lender grid, SOP governs.
+
+  vi_leap_grant_rules.yaml:
+    owner: cif
+    lane: cif_grant
+    sources:
+      - path: "~/Desktop/Swift Capital Underwriting/Credit Policy/Grant Guidelines.pdf"
+        type: pdf
+        provenance: client_supplied
+        last_synced: 2026-03-31
+
+  bizbuysell_filters.yaml:
+    owner: keith_williams
+    lane: sba_broker
+    sources:
+      - path: "borrower-prospecting skill, Mode 2"
+        type: internal
+        provenance: keith_configured
+
+  lender_profiles.yaml:
+    owner: keith_williams
+    lane: broker | sba_broker
+    sources:
+      - path: "Playbooks/Lender_Profiles/LENDER_ONBOARDING_PROFILES.md"
+        type: md
+        provenance: keith_research
+        last_synced: 2026-04-14
+
+  broker_rules.yaml:
+    owner: keith_williams
+    lane: broker | sba_broker
+    sources:
+      - path: "Playbooks/LEAD_MONETIZATION_PLAYBOOK.md"
+        type: md
+        provenance: keith_policy
+        last_synced: 2026-04-14
+    standing_rules:
+      - "No MCA referrals. Ever."
+      - "No Colony Bank brokering (employment conflict)."
+      - "CDFI fees borrower-paid on separate engagement letter."
+      - "Form 159 on every SBA-backed deal."
+      - "No outbound email without Keith's approval. Draft only."
+
+  lead_scoring.yaml:
+    owner: keith_williams
+    lane: broker | sba_broker
+    sources:
+      - path: "FORGE/skills/borrower-prospecting/SKILL.md (100-pt model)"
+        type: internal
+        provenance: keith_configured
+
+  email_voice_rules.yaml:
+    owner: keith_williams
+    lane: all
+    sources:
+      - path: "skills/email-drafter/ + draft-outbound-email SKILL.md"
+        type: internal
+        provenance: keith_configured

@@ -1,0 +1,183 @@
+# Lender Profiles — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Source: Playbooks/Lender_Profiles/LENDER_ONBOARDING_PROFILES.md
+# Used by: intake_broker_client (lender shortlist), rank_outreach_prospects
+#
+# HARD RULE: Colony Bank is NEVER a broker target lender (Keith is W-2 VP-Underwriter there — employment conflict).
+
+policy_version: 1.0.0
+effective_date: 2026-04-15
+owner: Keith Williams
+
+# =====================================================================
+# EXCLUSIONS
+# =====================================================================
+never_shortlist:
+  - name: "Colony Bank SBSL"
+    reason: "Employment conflict — Keith is W-2 VP-Underwriter"
+  - name: "Any MCA / factor-rate lender"
+    reason: "Standing policy: no MCA referrals, ever"
+  - examples_excluded_mca: [Kapitus, Credibly, OnDeck_MCA, Rapid_Finance]
+
+# =====================================================================
+# TIER 1 — PREMIUM SBA BANKS (for strong deals)
+# =====================================================================
+tier_1_sba_banks:
+  - name: "Live Oak Bank"
+    type: sba_7a_bank
+    specialty: [sba_7a, sba_504, industry_verticals]
+    sweet_spot_loan_size: [350000, 5000000]
+    preferred_industries: [medical, dental, veterinary, pharmacy, professional_services, franchise, self_storage, funeral, agriculture]
+    geography: nationwide
+    broker_friendly: true
+    commission_paid_by: lender
+    typical_commission_bps: 100   # 1% of loan amount (negotiated)
+    turn_time_weeks: [4, 8]
+    contact_path: "bdo_relationship"
+    notes: "#1 SBA 7(a) lender nationally. High bar — strong credit, strong cash flow, clean file."
+
+  - name: "Newtek Bank"
+    type: sba_7a_bank
+    specialty: [sba_7a, working_capital, business_acquisition]
+    sweet_spot_loan_size: [150000, 5000000]
+    preferred_industries: [services, light_manufacturing, franchise, acquisition]
+    geography: nationwide
+    broker_friendly: true
+    commission_paid_by: lender
+    turn_time_weeks: [3, 6]
+    notes: "Aggressive on working capital. Decent on slightly hairy deals."
+
+  - name: "Celtic Bank"
+    type: sba_7a_bank
+    specialty: [sba_7a, sba_express, ecommerce, franchise]
+    sweet_spot_loan_size: [50000, 5000000]
+    preferred_industries: [ecommerce, franchise, services, tech]
+    geography: nationwide
+    broker_friendly: true
+    commission_paid_by: lender
+    notes: "Strong on smaller and online-based businesses."
+
+  - name: "Byline Bank"
+    type: sba_7a_bank
+    specialty: [sba_7a, acquisition, partner_buyout]
+    sweet_spot_loan_size: [500000, 5000000]
+    geography: nationwide
+    broker_friendly: true
+    notes: "Acquisition specialist."
+
+  - name: "Huntington Bank"
+    type: sba_7a_bank
+    specialty: [sba_7a, midwest]
+    geography: [OH, MI, IN, IL, KY, WV, PA]
+    broker_friendly: conditional
+    notes: "Strong in Midwest / PA."
+
+# =====================================================================
+# TIER 2 — CDFI / MISSION LENDERS (for CDFI-friendly profile)
+# =====================================================================
+tier_2_cdfi_mission:
+  - name: "VestedIn"
+    type: cdfi
+    specialty: [small_business, philly_metro, minority_women_owned]
+    sweet_spot_loan_size: [25000, 500000]
+    geography: [PA, NJ, DE]
+    broker_friendly: true
+    warm_contact: true   # Keith attends Black Squirrel cohort hosted by VestedIn
+    fee_structure: borrower_paid
+    notes: "Tier 4 friendly. Warm relationship. Philadelphia focus."
+
+  - name: "LiftFund"
+    type: cdfi
+    specialty: [microloans, small_business, minority_women_owned]
+    sweet_spot_loan_size: [5000, 500000]
+    geography: [TX, LA, MS, AL, FL, AR, TN, NM, MO, KY, OK, GA, SC]
+    broker_friendly: true
+    fee_structure: borrower_paid
+
+  - name: "Accion Opportunity Fund"
+    type: cdfi
+    specialty: [small_business, underserved_markets]
+    sweet_spot_loan_size: [5000, 250000]
+    geography: nationwide
+    broker_friendly: true
+    fee_structure: borrower_paid
+
+  - name: "PA CDFI Network member banks"
+    type: cdfi_network
+    contact: "Varsovia Fernandez, vfernandez@pacdfinetwork.org, 717.725.6356"
+    geography: [PA]
+
+# =====================================================================
+# TIER 4 — BK / CREDIT REPAIR ROUTING
+# =====================================================================
+tier_4_credit_repair:
+  - name: "PeopleFund"
+    type: cdfi
+    specialty: [credit_challenged, post_bk, formerly_justice_involved]
+    sweet_spot_loan_size: [5000, 500000]
+    geography: [TX]
+    broker_friendly: true
+    notes: "Primary Tier 4 destination."
+
+  - name: "Clearinghouse CDFI"
+    type: cdfi
+    specialty: [credit_challenged, community_development]
+    geography: [CA, NV, AZ, NM, WA, OR]
+    broker_friendly: true
+
+  - name: "Reinvestment Fund"
+    type: cdfi
+    specialty: [small_business, community_facilities]
+    geography: [PA, NJ, DE, MD, DC]
+    broker_friendly: conditional
+
+# =====================================================================
+# SPECIALTY LENDERS
+# =====================================================================
+specialty_lenders:
+  medical_dental:
+    - "Live Oak Bank (medical vertical)"
+    - "Bank of America Practice Solutions"
+    - "Wells Fargo Practice Finance"
+  hospitality_hotel:
+    - "Live Oak (hospitality)"
+    - "Stearns Bank"
+  agriculture:
+    - "Live Oak (ag vertical)"
+    - "Farm Credit"
+  sba_504_cdcs:
+    - "TMC Financing"
+    - "CDC Small Business Finance"
+    - "Mortgage Capital Development"
+
+# =====================================================================
+# DEAL-TO-LENDER MATCHING TABLE
+# =====================================================================
+matching_rules:
+  - deal_profile: "Strong credit 720+, CRE-secured, medical/dental, $500K-$5M"
+    shortlist: [Live_Oak, Byline, Newtek]
+  - deal_profile: "Standard 7(a), acquisition, $350K-$2M, clean file"
+    shortlist: [Live_Oak, Newtek, Celtic]
+  - deal_profile: "Working capital, $150K-$500K, services/ecommerce"
+    shortlist: [Newtek, Celtic]
+  - deal_profile: "Small loan $50K-$250K, ecommerce/franchise"
+    shortlist: [Celtic, Accion_Opportunity_Fund]
+  - deal_profile: "Tier 3 / CDFI-friendly, MBE-focused, <$500K"
+    shortlist: [VestedIn, LiftFund, Accion_Opportunity_Fund]
+  - deal_profile: "Tier 4 BK / credit challenges"
+    shortlist: [PeopleFund, Clearinghouse_CDFI, VestedIn_nurture]
+  - deal_profile: "PA metro, MBE, small-to-mid"
+    shortlist: [VestedIn, Reinvestment_Fund, PA_CDFI_Network]
+  - deal_profile: "CRE 504"
+    shortlist: [TMC_Financing, CDC_Small_Business_Finance]
+
+# =====================================================================
+# RELATIONSHIP STATUS TRACKING
+# =====================================================================
+relationship_status_values:
+  - cold          # never contacted
+  - warm          # prior communication, no deal yet
+  - active        # deal in pipeline with them
+  - producing     # multiple closed deals
+  - stalled       # was active, went silent
+  - dnc           # do not contact

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# FORGE v2 pre-commit hook — 16/16 gate enforced locally.
+# Install: git config core.hooksPath .githooks && chmod +x .githooks/pre-commit
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+echo "[pre-commit] running golden harness..."
+if ! python3 FORGE_v2/golden/tools/run_golden.py > /tmp/forge_harness.out 2>&1; then
+  echo ""
+  echo "==================================================="
+  echo "  HARNESS FAILED — commit blocked"
+  echo "==================================================="
+  tail -n 40 /tmp/forge_harness.out
+  echo ""
+  echo "Fix the regression, or bypass with: git commit --no-verify"
+  echo "(Bypassing is STRONGLY discouraged per CLAUDE.md rules.)"
+  exit 1
+fi
+
+PASS_LINE=$(grep -E "Summary:" /tmp/forge_harness.out || true)
+echo "[pre-commit] $PASS_LINE — OK"

@@ -1,0 +1,60 @@
+policy_version: 1.0.0
+last_updated: 2026-04-15
+source: skills/email-drafter/SKILL.md (legacy)
+owner: Keith Williams
+
+# Voice rules and formatting governing all outbound email drafts.
+
+account_routing:
+  sba_lending_network:
+    email: keith@sbalendingnetwork.com
+    mcp: gmail
+    signature_key: sba_signature
+  swift_capital:
+    email: keith@swiftcapitaloptions.com
+    mcp: chrome  # NEVER gmail — hard rule
+    signature_key: swift_signature
+  personal:
+    email: keithfwilliamsjr@gmail.com
+    mcp: gmail
+    signature_key: none
+
+banned_phrases:
+  - "I'd be happy to"
+  - "I hope this email finds you well"
+  - "Please don't hesitate to reach out"
+  - "I wanted to circle back"
+  - "Warm regards"
+  - "As per our conversation"
+  - "Reaching out to"
+  - "I trust this finds you well"
+
+banned_characters:
+  - em_dash: "—"  # Replace with hyphen or rewrite
+  - en_dash: "–"
+
+formatting_rules:
+  content_type: text/html
+  include_signature: true
+  no_semicolons_in_casual: true
+  short_sentences: true
+  direct_voice: true
+  closing_preferred: ["Best,", "Thanks,"]
+  closing_banned: ["Warm regards,", "Respectfully yours,"]
+
+pii_detection_patterns:
+  ssn_full: '\d{3}-\d{2}-\d{4}'
+  account_number: '\d{8,}'
+  routing_number: '\d{9}'
+
+cta_defaults:
+  sba_prospect_outreach: "https://cal.com/keith-williams-qeicz8/30min"
+  brand_color_hex: "#C8922A"
+
+sba_signature_html: |
+  <!-- Full SBA Lending Network signature HTML goes here -->
+  <!-- Populated from skills/email-drafter/SKILL.md in next session -->
+
+swift_signature_html: |
+  <!-- Full Swift Capital signature HTML goes here -->
+  <!-- Populated from Swift Capital Underwriting configs in next session -->

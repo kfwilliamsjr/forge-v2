@@ -1,0 +1,54 @@
+policy_version: 1.0.0
+last_updated: 2026-04-15
+source: CLAUDE.md "Broker Business Policies (Standing)"
+owner: Keith Williams
+
+# Standing policies — do not override without explicit Keith approval + version bump.
+
+excluded_products:
+  - mca  # Merchant Cash Advance — permanently off the board
+  - kapitus
+  - credibly
+  - ondeck_mca_arm
+  - rapid_finance
+
+excluded_lenders:
+  - colony_bank  # Employment conflict (Keith is Colony W-2 VP-Underwriter)
+
+commission_schedule:
+  standard_non_re:
+    rate: 0.01
+    applies_when: "Loan referral/brokering only, no real estate collateral"
+  real_estate:
+    rate: 0.02
+    applies_when: "Deal involves CRE or real estate-secured lending"
+  full_service:
+    rate: 0.03
+    applies_when: "Full underwriting + deal evaluation + packaging for lender"
+
+fee_source_rules:
+  sba_backed:
+    fee_source: loan_proceeds
+    form_159_required: true
+    disclosure_required: true
+  cdfi:
+    fee_source: borrower_paid
+    engagement_letter_required: true
+    form_159_required_if_sba_backed: true
+    notes: "CDFI Fund rules prohibit loan-proceeds broker fees on most CDFI products."
+  conventional:
+    fee_source: either
+    form_159_required: false
+
+hard_rules:
+  - "No outbound emails without Keith's explicit approval. Draft only."
+  - "Screenshot every outbound email at moment of send."
+  - "No MCA referrals ever."
+  - "No Colony Bank brokering."
+  - "Form 159 on every SBA-backed brokered deal."
+  - "CDFI fees are borrower-paid on separate engagement letter, disclosed on Form 159 where SBA-backed."
+
+tier_5_handling:
+  action: decline_and_exit
+  do_not: refer_to_mca
+  explanation: "Tier 5 leads are declined and exited. MCA commissions (3-15%) do not outweigh reputational cost in SBA/CDFI community."

@@ -1,0 +1,140 @@
+# BizBuySell Mining Filters — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Used by: mine_bizbuysell_listings
+
+policy_version: 1.0.0
+effective_date: 2026-04-15
+owner: Keith Williams
+
+# =====================================================================
+# DEFAULT SEARCH FILTERS
+# =====================================================================
+default_filters:
+  price_range:
+    min: 150000
+    max: 5000000
+  cash_flow_min: 75000   # SDE floor for DSCR viability
+  geography_default: "nationwide_if_guaranty_gte_75pct"
+  geography_fallback: "southeast_us"   # Colony footprint
+  southeast_states: [GA, FL, AL, SC, NC, TN, MS, LA, AR, KY, VA, WV]
+  years_established_min: 3   # exclude raw startups
+
+# =====================================================================
+# PRIORITY INDUSTRY QUERIES — run in parallel
+# =====================================================================
+priority_industries:
+  top_tier:
+    - medical_practice
+    - dental_practice
+    - veterinary_clinic
+    - pharmacy_independent
+    - optometry_practice
+    - chiropractic_practice
+    - cre_secured_professional_services
+  acceptable:
+    - national_brand_gas_station
+    - national_flag_hotel
+    - franchise_fund_600_plus
+    - established_manufacturing
+    - specialty_food_beverage_profitable
+    - hvac_plumbing_electrical_established
+    - auto_repair_multi_bay
+  watch_list:
+    - car_wash   # lowest tier unless tunnel/newer
+    - rv_park
+    - self_storage
+    - laundromat
+
+# =====================================================================
+# PROHIBITED — auto-exclude
+# =====================================================================
+prohibited_industries:
+  - cannabis
+  - hemp_thc
+  - nursing_home
+  - assisted_living
+  - golf_course
+  - adult_entertainment
+  - gambling_primary
+  - firearms_manufacturing
+  - payday_lending
+  - bail_bonds
+  - unbranded_gas_station   # Colony decline
+  - independent_motel   # no flag
+
+# =====================================================================
+# QUERY PATTERNS
+# =====================================================================
+query_patterns:
+  - 'site:bizbuysell.com "{industry}" for sale {state} cash flow'
+  - 'site:bizbuysell.com "{industry}" SDE "{state}"'
+  - 'site:bizbuysell.com "{industry}" established {state} {year}'
+
+# =====================================================================
+# DSCR PRE-SCREEN — assumed financing
+# =====================================================================
+dscr_prescreen:
+  assumed_ltv: 0.80
+  assumed_rate: 0.10     # 10% (conservative SBA 7(a))
+  assumed_term_months: 120   # 10-year
+  min_dscr_pass: 1.25
+  formula: |
+    loan_amount = asking_price * 0.80
+    annual_ds = PMT(rate/12, term, -loan_amount) * 12
+    est_dscr = sde / annual_ds
+
+# =====================================================================
+# APPETITE-TIER SCORING (mirrors colony_grids.yaml appetite_tiers)
+# =====================================================================
+appetite_tier_points:
+  top_tier: 15
+  acceptable: 10
+  lowest_tier: 3
+  not_acceptable: 0   # excluded
+
+# =====================================================================
+# INDUSTRY-SPECIFIC RED FLAGS
+# =====================================================================
+industry_flags:
+  gas_station:
+    require_national_brand: true
+    national_brands: [Shell, Mobil, Chevron, BP, Exxon, Marathon, Sunoco, Citgo, Valero, Speedway, 76]
+    flag_if_unbranded: "Colony likely decline"
+  hotel:
+    require_national_flag: true
+    approved_flags: [Marriott, Hilton, Hyatt, IHG, Choice, Wyndham, Best_Western, La_Quinta, Radisson]
+  franchise:
+    require_fund_score: true
+    fund_tier_top: 750
+    fund_tier_acceptable: 600
+    fund_tier_reject: 599
+  medical_dental:
+    flag_structure: [practice, MSO, DSO]
+    preferred: practice
+  pharmacy:
+    flag_chain_vs_independent: true
+    preferred: independent
+    require_DEA_license: true
+
+# =====================================================================
+# BROKER CONTACT RESEARCH
+# =====================================================================
+broker_contact:
+  bizbuysell_masks_contact: true   # login required to unmask
+  fallback_search_patterns:
+    - "{broker_name} {brokerage} email contact"
+    - "{brokerage} email \"@{domain}\""
+    - "{broker_name} LinkedIn"
+  email_guess_patterns:
+    - "{first_initial}{last_name}@{domain}"
+    - "{first_name}.{last_name}@{domain}"
+    - "{first_name}@{domain}"
+  email_guessed_flag_required: true   # Keith verifies before send
+  form_only_fallback: "capture phone, skip email"
+
+# =====================================================================
+# CACHE / FRESHNESS
+# =====================================================================
+cache:
+  max_age_days: 7
+  force_refresh_on: [new_scan_requested, older_than_7d]

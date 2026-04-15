@@ -1,0 +1,124 @@
+# VI Leap Grant Rules — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Source: CIF Grant Guidelines.pdf + CIF_UNDERWRITING_PROCEDURES.md
+# This YAML governs VI Leap Fund grant eligibility and underwriting.
+
+policy_version: 1.0.0
+effective_date: 2026-04-15
+owner: Keith Williams (for CIF / Swift Capital)
+
+program:
+  name: "VI Leap Fund Grant"
+  administrator: "CIF (Community Investment Fund of VI)"
+  grant_range:
+    min: 5000
+    max: 15000
+  repayable: false
+  purpose: "Grant for disadvantaged USVI entrepreneurs — capital access, technical assistance, growth"
+
+# =====================================================================
+# ELIGIBILITY GATES — all must pass
+# =====================================================================
+eligibility_gates:
+  geography:
+    required: "Business operations located in US Virgin Islands (St. Thomas / St. John / St. Croix / Water Island)"
+    verification: [business_license, utility_bill, lease_or_deed]
+  ownership:
+    minimum_ownership_by_disadvantaged: 0.51
+    disadvantaged_categories:
+      - minority
+      - woman
+      - veteran
+      - low_to_moderate_income
+      - formerly_justice_involved
+  business_status:
+    must_be_for_profit: true
+    must_be_operating_or_ready_to_operate: true
+    startups_allowed: true   # with business plan + vendor quotes
+  prior_grant:
+    cannot_have_received_leap_grant_in_last_12_months: true
+
+# =====================================================================
+# GRANT-TO-REVENUE SANITY CHECK
+# =====================================================================
+grant_to_revenue_ratio:
+  flag_threshold: 2.0
+  rule: "If grant_amount > (annual_revenue * 2), flag for committee scrutiny — grant may be disproportionate to business scale"
+  exception: "Startup with documented vendor quotes + business plan may exceed"
+
+# =====================================================================
+# USE OF PROCEEDS (grant dollars)
+# =====================================================================
+allowed_use:
+  - equipment_purchase
+  - inventory
+  - marketing_advertising
+  - working_capital_short_term
+  - professional_services   # legal, accounting, consulting
+  - technology_software
+  - vendor_paid_direct   # CIF wires to vendor, not borrower
+  - license_permit_fees
+  - commercial_rent_deposit
+  - leasehold_improvements_minor
+
+prohibited_use:
+  - owner_salary_draw
+  - debt_payoff
+  - real_estate_purchase
+  - investment_securities
+  - personal_expenses
+  - relative_employment
+
+# =====================================================================
+# DISBURSEMENT
+# =====================================================================
+disbursement:
+  method: "Vendor-direct preferred (CIF wires to vendor upon invoice)"
+  borrower_reimbursement_allowed: true
+  reimbursement_requires: [paid_invoice, receipt, proof_of_payment]
+  wire_instructions_required: true
+
+# =====================================================================
+# DOCUMENTATION REQUIRED (mirrors cif_procedures.yaml intake_checklists.vi_leap_grant)
+# =====================================================================
+required_docs:
+  essential:
+    - Grant_Application
+    - Business_Plan_or_Narrative
+    - Entity_Docs
+    - Business_License
+    - Most_Recent_Tax_Return
+    - Bank_Statements_3_to_6_months
+    - Photo_ID
+  vendor:
+    - Vendor_Quotes_Invoices
+    - Vendor_Contracts
+    - Wiring_Instructions
+  blockers:
+    - Grant_Application
+    - Business_Plan_or_Narrative
+    - Entity_Docs
+    - Bank_Statements_3_to_6_months
+
+# =====================================================================
+# UNDERWRITING OUTPUT — grant summary (not a DSCR analysis)
+# =====================================================================
+underwriting_rules:
+  dscr_required: false
+  cash_flow_analysis_required: false
+  narrative_focus:
+    - demonstrated_need
+    - use_of_proceeds_justification
+    - business_viability_evidence
+    - community_impact
+    - vendor_quote_reasonableness
+  output_format: "grant_summary (2-3 pages, no G8WAY workbook required)"
+  committee_routing: "Akem review → committee (Pat / Ronnie / Omi)"
+
+# =====================================================================
+# POST-AWARD MONITORING
+# =====================================================================
+post_award:
+  reporting_cadence: "90 days post-disbursement, then annual for 2 years"
+  required_reports: [use_of_proceeds_confirmation, business_health_update, impact_metrics]
+  clawback_trigger: "Misuse of funds or borrower abandons business within 12 months"

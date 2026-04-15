@@ -1,0 +1,80 @@
+{
+  "_description": "Expected outputs for AIPSS. RECONCILED 2026-04-15 against signed G8WAY DSCR (UW) tab from 3-11-2026. Y1 Bank-Adjusted numbers.",
+  "_reconciliation_notes": {
+    "borrower_dscr_match": "EXACT — engine 1.23 = G8WAY 1.234231 (rounds to 1.23)",
+    "bani_match": "EXACT — engine $219,001.40 = G8WAY $219,001.40",
+    "ads_match": "EXACT — engine $177,439.51 = G8WAY $177,439.51 (7a $171,095.35 + seller note $6,344.16 via overrides)",
+    "global_dscr_status": "ESTIMATE ONLY — personal financials synthesized; no PFS on disk. Do not cite global as ground truth.",
+    "prior_version_was_fiction": "Previous expected used 2.25x borrower DSCR from fabricated owner-comp-addback scenario. Corrected against real signed G8WAY."
+  },
+  "_tolerance": {
+    "money": 1.00,
+    "ratio": 0.02,
+    "pct": 0.01
+  },
+  "deal_id": "AIPSS_2026-03",
+
+  "expected": {
+    "extract_sba_deal_parameters": {
+      "status": "ok",
+      "industry_label": "medical_practice",
+      "deal_type": "expansion",
+      "loan_amount": 1699000,
+      "prohibited_industry": false,
+      "colony_employment_conflict": false
+    },
+
+    "match_colony_grid": {
+      "status": "ok",
+      "grid_selected": "medical_sba_expansion",
+      "borrower_dscr_threshold": 1.15,
+      "global_dscr_threshold": 1.10,
+      "nrb_cap": 400000,
+      "verdict": "CONDITIONAL",
+      "conditions": ["collateral_shortfall_check", "variable_rate_shock_test"]
+    },
+
+    "calculate_business_cash_flow": {
+      "status": "ok",
+      "adjusted_cash_flow": 219001.40,
+      "new_annual_debt_service": 177439.51,
+      "borrower_dscr": 1.23,
+      "threshold_applied": 1.25,
+      "pass_fail": "MARGINAL",
+      "engine": "underwriteos.cashflow"
+    },
+
+    "calculate_global_cash_flow": {
+      "status": "ok",
+      "global_cf_numerator": 504001.40,
+      "global_ds_denominator": 321439.51,
+      "global_dscr": 1.57,
+      "threshold_applied": 1.10,
+      "pass_fail": "PASS",
+      "engine": "underwriteos.cashflow"
+    },
+
+    "run_cif_stress_tests": {
+      "status": "ok",
+      "scenarios": {
+        "rate_shock_300bps": {"pass": true}
+      }
+    },
+
+    "screen_sba_character_loe_needed": {
+      "status": "ok",
+      "loe_required": false,
+      "form_912_required": true,
+      "caivrs_required": true,
+      "character_review_blocker": false
+    },
+
+    "calculate_broker_commission": {
+      "status": "ok",
+      "service_level": "full_service",
+      "commission_rate": 0.03,
+      "commission_amount": 50970.00,
+      "form_159_required": true
+    }
+  }
+}

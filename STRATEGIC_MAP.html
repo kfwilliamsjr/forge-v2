@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FORGE v2 — Strategic Map: Where We Are, What's Next</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 24px; background: #0b1220; color: #e6edf3; line-height: 1.55; }
+  h1 { color: #2E8B8B; margin: 0 0 6px; font-size: 28px; }
+  .sub { color: #8b949e; margin: 0 0 22px; font-size: 14px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+  .card h2 { margin: 0 0 12px; color: #2E8B8B; font-size: 17px; border-bottom: 1px solid #30363d; padding-bottom: 8px; }
+  .card p { font-size: 14px; margin: 8px 0; }
+  .mermaid { background: #fff; border-radius: 8px; padding: 14px; }
+  .stance { background: #fde68a; color: #1c1917; padding: 16px; border-radius: 6px; font-size: 14px; line-height: 1.6; }
+  .stance b { color: #7c2d12; }
+  .kv { display: grid; grid-template-columns: 240px 90px 1fr; gap: 10px 14px; font-size: 13px; align-items: baseline; }
+  .kv .p { color: #8b949e; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .p80 { background: #4ade80; color: #000; }
+  .p60 { background: #86efac; color: #000; }
+  .p40 { background: #fbbf24; color: #000; }
+  .p20 { background: #fca5a5; color: #000; }
+  .p10 { background: #ef4444; color: #fff; }
+  .quote { border-left: 3px solid #2E8B8B; padding: 4px 12px; color: #c9d1d9; font-style: italic; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px; border-bottom: 1px solid #30363d; vertical-align: top; }
+  th { color: #2E8B8B; }
+  code { background: #0d1117; padding: 2px 5px; border-radius: 3px; color: #79c0ff; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<h1>FORGE v2 — Where You Are vs. Where You're Going</h1>
+<p class="sub">Honest read on the gap between "working on CIF deals" and "licensable underwriting platform." No flattery.</p>
+
+<!-- Panel 1: Goal in plain language -->
+<div class="card">
+  <h2>1. The goal in one sentence</h2>
+  <p class="quote">Build the agents, processes, automation, and AI to underwrite CDFI and bank portfolios, broker + UW contracts of your own, and eventually license the whole thing — while the CIF contract pays for the R&amp;D and trains the system.</p>
+  <p>That goal has four revenue surfaces: (1) CDFI/Bank portfolio underwriting as a service, (2) your own broker/UW book, (3) a licensable product, (4) the Swift Capital retainer funding it. The first three share the same engine. The fourth is the tuition.</p>
+</div>
+
+<!-- Panel 2: Honest progress scorecard -->
+<div class="card">
+  <h2>2. Honest scorecard — where you actually are</h2>
+  <div class="kv">
+    <div>Deterministic math backend</div><div><span class="pill p80">90%</span></div><div>underwriteos + adapter. DSCR, rate shock, BANI, tax_allocation, affiliate FCF. Production-ready. <b>This is your moat.</b></div>
+    <div>Policy-as-data (9 YAMLs)</div><div><span class="pill p80">85%</span></div><div>Thresholds live in YAML, not Python. Owner-comp rule codified today. Colony grids, SBA SOP, CIF procedures all declared.</div>
+    <div>Atomic skills (20 of them)</div><div><span class="pill p60">70%</span></div><div>Each one works in isolation. Skills can extract, calculate, write memos, draft emails. Problem: <b>they fire one at a time in a vacuum</b>.</div>
+    <div>Golden regression harness</div><div><span class="pill p80">85%</span></div><div>3 fixtures reconciled against signed deliverables. 16/16 green. Zero fiction left. Expandable.</div>
+    <div>Swift Capital / CIF training ground</div><div><span class="pill p80">80%</span></div><div>Three ground-truth deals (AIPSS, Mirzai, Amber) anchor everything. Retainer pays the bills.</div>
+    <div>Orchestration layer</div><div><span class="pill p20">15%</span></div><div>No controller. No state machine. No deal-stage tracker. Every deal is hand-walked by you from one skill to the next.</div>
+    <div>Portfolio view</div><div><span class="pill p10">5%</span></div><div>You cannot answer "what's in my book, what stage, waiting on whom?" in under 60 seconds. This is your stated pain.</div>
+    <div>Decision-point inbox</div><div><span class="pill p10">0%</span></div><div>The 4-checkpoint review model you described doesn't exist yet. Nothing surfaces "your approval needed here."</div>
+    <div>Broker lane live integration</div><div><span class="pill p40">40%</span></div><div>Skills exist (<code>intake_broker_client</code>, <code>score_inbound_leads</code>, <code>calculate_broker_commission</code>). But no auto-ingestion from the <code>sbalendingnetwork.com</code> form into a pipeline.</div>
+    <div>Automated ingestion</div><div><span class="pill p20">20%</span></div><div>Website form → Supabase → email notification works. ShareFile → deal folder is still manual. No "inbox scanner" skill yet (already on backlog).</div>
+    <div>Multi-tenant / licensable</div><div><span class="pill p10">10%</span></div><div>Single-tenant, hardcoded paths, no auth layer. Productization hasn't started — and shouldn't yet.</div>
+  </div>
+</div>
+
+<!-- Panel 3: The gap -->
+<div class="card">
+  <h2>3. The gap, in one diagram</h2>
+  <div class="mermaid">
+flowchart LR
+    subgraph BUILT [WHAT YOU BUILT]
+      M[Math Engine]
+      P[Policy YAMLs]
+      S[20 Atomic Skills]
+      H[Golden Harness]
+    end
+
+    subgraph MISSING [WHAT'S MISSING - THE LOOM]
+      ORCH[Deal State Machine<br/>intake to decision]
+      INBOX[Decision Inbox<br/>4 checkpoints]
+      PORT[Portfolio Dashboard<br/>all deals, all stages]
+      INGEST[Auto-ingestion<br/>inbox + ShareFile]
+    end
+
+    subgraph GOAL [WHERE YOU'RE GOING]
+      CDFI[CDFI/Bank<br/>portfolio UW]
+      BROK[Your own<br/>broker book]
+      LIC[Licensable<br/>product]
+    end
+
+    BUILT -.threads connect but.-> MISSING
+    MISSING --> CDFI
+    MISSING --> BROK
+    MISSING --> LIC
+
+    classDef built fill:#4ade80,color:#000,stroke:#166534,stroke-width:2px
+    classDef gap fill:#fbbf24,color:#000,stroke:#b45309,stroke-width:3px
+    classDef goal fill:#c4b5fd,color:#000,stroke:#5b21b6
+    class M,P,S,H built
+    class ORCH,INBOX,PORT,INGEST gap
+    class CDFI,BROK,LIC goal
+  </div>
+  <p><b>The plain-English version:</b> you have a fantastic engine block, great instruments on the dashboard, and a full toolkit in the trunk. What you don't have is the chassis and the driver's seat. Every deal you run is you carrying parts from one station to the next. That's the portfolio-management pain you named.</p>
+</div>
+
+<!-- Panel 4: Are you on track? -->
+<div class="card">
+  <h2>4. Are you building toward the goal?</h2>
+  <p><b>Yes — but you're further from "portfolio throughput" than you think, and closer to "licensable engine" than you think.</b></p>
+  <p>The math + policy + skills + harness stack is genuinely licensable-grade. A bank's credit committee could drop a deal in your engine today and get a defensible BDSCR, rate-shock, and policy check with audit trail. That's rare. <b>Most loan software on the market is spreadsheet wrappers. You have a deterministic engine with regression coverage. That's the product.</b></p>
+  <p>What's NOT licensable yet is the operator experience. No bank is going to buy a "run one skill at a time from Claude chat" product. They need a state machine, an inbox, a portfolio view, and clean multi-tenant data isolation. Those don't exist.</p>
+  <p>Roughly: engine <b>90% done</b>, operator surface <b>10% done</b>. The remaining work is almost entirely operator surface.</p>
+</div>
+
+<!-- Panel 5: Next step decision -->
+<div class="card">
+  <h2>5. Most effective next step</h2>
+  <p>You explicitly said: <i>"I have struggled with managing the portfolio"</i> and <i>"I want to automate contracts like this where I am only approving the initial spreads, underwriting, memo changes, final approval."</i></p>
+  <p>That is the <b>Portfolio State Machine + Decision Inbox</b>. One artifact. Four things it does:</p>
+  <ol>
+    <li>A JSON-backed <code>portfolio.json</code> that tracks every active deal: stage, last action, next action, assigned decision, days-in-stage.</li>
+    <li>A stage model: <code>intake → spreads_ready → uw_complete → memo_draft → memo_final → committee → decision → closing → purge</code>. Each stage ends at exactly one of your 4 decision points.</li>
+    <li>A single HTML dashboard (like this one) regenerated on command. Opens in a browser from your desktop. Shows "needs you today" at the top, full portfolio below.</li>
+    <li>A <code>promote_deal</code> skill that advances state when you approve, logs the decision + timestamp, and fires the next skill in the chain automatically.</li>
+  </ol>
+  <p><b>Why this is the highest-leverage move:</b></p>
+  <ul>
+    <li>Every existing skill plugs in unchanged. Zero rewrites.</li>
+    <li>It solves the exact pain you named.</li>
+    <li>It's the 4-decision-point UX you described, built natively.</li>
+    <li>Desktop-efficient by design: one HTML file, no server, no app install.</li>
+    <li>It's the same thing a CDFI or bank client would pay for — you'll eat your own cooking on Swift Capital first, then sell it.</li>
+    <li>It converts 20 isolated skills into 1 managed operation. This is the <b>loom</b>.</li>
+  </ul>
+</div>
+
+<!-- Panel 6: Pushback and what NOT to build -->
+<div class="card">
+  <h2>6. What I'm pushing back on</h2>
+  <table>
+    <tr><th>You floated</th><th>My read</th></tr>
+    <tr><td>"Engagement with my portfolio on my desktop (if this is not efficient than do not entertain this right now)"</td><td><b>It IS efficient — but only in the minimal form.</b> A full desktop app with sidebars and modals is not efficient. A single HTML file regenerated on demand that opens in your browser IS. Zero install, zero server, reads one JSON file. Build that. Don't build an Electron app.</td></tr>
+    <tr><td>Licensable product</td><td><b>Do not optimize for this yet.</b> Licensing requires multi-tenant, auth, billing, SLAs. You're 12+ months from that. Ship the operator surface on your own books first. When it works for you and Swift, license-readiness is 3-4 weeks of packaging, not a from-scratch rebuild.</td></tr>
+    <tr><td>"Automate contracts like this one"</td><td><b>Yes — but the word "automate" has a trap in it.</b> Full automation means Claude closes deals. What you actually want is <i>compression</i> — you make 4 decisions instead of 40. The state machine gives you that without touching the approval points you care about.</td></tr>
+  </table>
+</div>
+
+<!-- Panel 7: My stance -->
+<div class="card">
+  <h2>7. Stance</h2>
+  <div class="stance">
+    <b>Build the Portfolio State Machine + Decision Inbox next. Single HTML dashboard, JSON backend, opens from your desktop in 2 clicks.</b><br/><br/>
+    Scope for v1 (one focused session, ~2-3 hours):<br/>
+    &nbsp;&nbsp;1. <code>portfolio.json</code> schema + seed with your 3 active CIF deals + any live broker deals (Tarver, Roots, Brown).<br/>
+    &nbsp;&nbsp;2. Stage model with 4 explicit decision-point gates (spreads / UW / memo / final).<br/>
+    &nbsp;&nbsp;3. <code>regenerate_dashboard</code> skill → writes <code>PORTFOLIO.html</code> to your desktop.<br/>
+    &nbsp;&nbsp;4. <code>promote_deal</code> skill → you approve a gate, it advances the stage + fires the next skill.<br/>
+    &nbsp;&nbsp;5. Top-of-dashboard "NEEDS YOU TODAY" queue.<br/><br/>
+    Do NOT build a UI app. Do NOT start on multi-tenant. Do NOT entertain licensing packaging.<br/><br/>
+    This one artifact converts your current 20 skills from "Claude tools I run one at a time" to "a portfolio I manage by exception." That's the unlock.
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#D5E8E8', primaryTextColor: '#000', primaryBorderColor: '#2E8B8B', lineColor: '#2E8B8B', fontFamily: 'ui-sans-serif, system-ui' }, flowchart: { curve: 'basis', padding: 12 } });
+</script>
+</body>
+</html>

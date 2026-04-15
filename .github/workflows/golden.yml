@@ -1,0 +1,40 @@
+name: FORGE v2 — Golden Harness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  harness:
+    name: Run golden regression (16/16 gate)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify engine importable
+        run: |
+          python3 -c "import sys; sys.path.insert(0, '_legacy_forge/underwriteos'); from underwriteos.cashflow import bank_adjusted_net_income; print('engine ok')"
+
+      - name: Run golden harness
+        run: python3 FORGE_v2/golden/tools/run_golden.py
+
+      - name: Verify dashboard regenerator
+        run: |
+          python3 portfolio/tools/regenerate_dashboard.py
+          test -f portfolio/PORTFOLIO.html && echo "dashboard ok"
+
+      - name: Surface audit log on failure
+        if: failure()
+        run: |
+          echo "::group::Recent decisions log"
+          tail -n 50 portfolio/decisions.log.jsonl 2>/dev/null || echo "no log"
+          echo "::endgroup::"

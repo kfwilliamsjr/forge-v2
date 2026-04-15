@@ -1,0 +1,51 @@
+{
+  "_description": "Expected outputs for Amber Alexander Festival Loan. RECONCILED 2026-04-15 against signed Festival Loan Report delivered 2026-04-10 (7 pages, CIF committee submission).",
+  "_reconciliation_notes": {
+    "business_dscr_match": "EXACT — engine 2.07 = memo 2.07",
+    "ads_match": "EXACT — engine $5,723.95 = memo $5,723.95 (via annual_payment_override)",
+    "bani_match": "EXACT — engine $11,857 = memo Net Business Income $11,857",
+    "global_dscr_match": "EXACT — engine 0.29 = memo 0.29 (business-income-only; personal income modeled as $0 to match memo's Path A baseline)",
+    "path_a_conditioning": "Memo recommends CONDITIONAL APPROVE contingent on personal income verification of $33,604/yr minimum to reach 1.10x global DSCR. Fixture's global FAIL is the memo's exact unconditioned state.",
+    "prior_version_was_fiction": "Previous fixture had $12K/12mo/8% loan, $42K rev, 668 credit. Real deal is $15K/36mo/9%, $20K rev, 752 credit."
+  },
+  "_tolerance": {"money": 2.00, "ratio": 0.02, "pct": 0.01},
+  "deal_id": "AMBER_2026-04",
+
+  "expected": {
+    "intake_cif_checklist": {
+      "status": "conditional_approve_with_override",
+      "product_type": "festival_loan",
+      "readiness_score_min": 4,
+      "readiness_override": true,
+      "override_by": "Akem Durand"
+    },
+
+    "calculate_business_cash_flow": {
+      "status": "ok",
+      "adjusted_cash_flow": 11857.00,
+      "new_annual_debt_service": 5723.95,
+      "borrower_dscr": 2.07,
+      "threshold_applied": 1.25,
+      "pass_fail": "PASS",
+      "engine": "underwriteos.cashflow"
+    },
+
+    "calculate_global_cash_flow": {
+      "status": "ok",
+      "global_cf_numerator": 11857.00,
+      "global_ds_denominator": 41327.95,
+      "global_dscr": 0.29,
+      "threshold_applied": 1.10,
+      "pass_fail": "FAIL",
+      "engine": "underwriteos.cashflow"
+    },
+
+    "write_festival_report": {
+      "status": "ok",
+      "pages": [6, 8],
+      "sections_required": ["borrower_summary", "sources_and_uses", "credit_profile", "cash_flow_analysis", "readiness_assessment", "risk_assessment_five_cs", "document_checklist", "conditions_of_approval", "recommendation"],
+      "xlsx_workbook_produced": true,
+      "recommendation": "CONDITIONAL_APPROVE"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "_description": "Golden fixture — Amber Alexander Festival Loan (Booth 23, St. Thomas Carnival 2026). Real CIF deal, signed Festival Loan Report delivered 2026-04-10. USVI carnival vendor microloan, 36-month term. Used as Tier 1 reference: festival checklist + simplified cash flow + festival report with Path A personal-income conditioning.",
+  "_source_docs": [
+    "Festival_Loan_Report_Amber_Alexander_2026-04-10.pdf",
+    "Festival_Loan_Report_Amber_Alexander_2026-04-10.docx",
+    "Amber_Alexander_Cash_Flow_Workbook_2026-04-10.xlsx"
+  ],
+  "_pii_status": "real numbers from signed memo; borrower name retained for traceability. Pre-commit: scrub before open-source.",
+  "_reconciled_against_memo": "2026-04-15",
+  "deal_id": "AMBER_2026-04",
+  "lane": "cif",
+  "product_type": "festival_loan",
+  "policy_version": "1.0.0",
+
+  "borrower": {
+    "legal_name": "Amber Alexander (Booth 23, Carnival Food Vendor)",
+    "entity_type": "sole_prop",
+    "state": "VI",
+    "industry_label": "festival_vendor",
+    "industry_naics": "722330",
+    "years_in_business": 11,
+    "_note_start_date": "Application states 4/1/2026 entity registration but 11 years of carnival vendor history. Condition #3 in memo requires clarification."
+  },
+
+  "request": {
+    "deal_type": "festival_microloan",
+    "loan_amount": 15000,
+    "loan_term_months": 36,
+    "rate": 0.09,
+    "rate_type": "fixed",
+    "use_of_proceeds": {
+      "inventory_food_bev": 4000,
+      "staffing_payroll": 3800,
+      "licenses_permits": 3000,
+      "booth_setup_design": 1500,
+      "equipment_rentals": 1200,
+      "contingency": 600,
+      "transportation": 500,
+      "marketing": 400
+    },
+    "booth_rental_paid_oop": 2600
+  },
+
+  "financials_business": {
+    "tax_year": 2026,
+    "scenario": "stated_annual_revenue_with_scaled_projections",
+    "gross_revenue": 20000,
+    "cogs": 4723,
+    "operating_expenses": 3420,
+    "net_income": 11857,
+    "depreciation": 0,
+    "amortization": 0,
+    "interest_expense": 0,
+    "owner_compensation": 0,
+    "owner_compensation_addback": false,
+    "one_time_expenses": 0,
+    "required_distributions": 0,
+    "_note_basis": "No historical tax returns or audited P&L. Net business income is stated revenue less scaled 2-month carnival projections (Apr-May 2026: $24,560 rev / $14,560 profit)."
+  },
+
+  "financials_personal": {
+    "w2_income": 0,
+    "other_income": 0,
+    "personal_debt_annual": 11604,
+    "living_expenses_annual": 24000,
+    "liquid_assets": 0,
+    "_note_income": "Personal income UNKNOWN at time of memo — CONDITIONED (Path A): minimum $33,604/yr required for 1.10x global DSCR. Fixture models memo baseline (zero personal income) so global DSCR matches the 0.29x FAIL verdict."
+  },
+
+  "proposed_debt_service": {
+    "new_loan_annual_ds_override": 5723.95,
+    "new_loan_monthly_payment_memo": 477.00,
+    "existing_debt_annual_ds": 0
+  },
+
+  "character": {
+    "credit_score_primary": 752,
+    "credit_bureau_date": "2026-04-07",
+    "credit_source": "IdentityIQ VantageScore 3.0",
+    "bankruptcy_last_7yr": false,
+    "felony": false,
+    "tax_liens_unsatisfied": false,
+    "derogatory_items": false,
+    "fraud_alert_active": true,
+    "fraud_alert_note": "7-year identity fraud victim alert on TransUnion placed 2022-11-04. Protective, not negative."
+  },
+
+  "readiness": {
+    "score": 4,
+    "max": 14,
+    "band": "technical_assistance_referral",
+    "override_by": "Akem Durand",
+    "override_date": "2026-03-25",
+    "override_directive": "We will begin processing your loan"
+  },
+
+  "memo_ground_truth": {
+    "_description": "Headline numbers from signed Festival Loan Report 2026-04-10.",
+    "annual_debt_service": 5723.95,
+    "net_business_income": 11857,
+    "business_dscr_base": 2.07,
+    "global_dscr_business_only": 0.29,
+    "stress_revenue_minus_20": 1.66,
+    "personal_income_needed_1_10": 33604,
+    "personal_income_needed_1_25": 39803,
+    "recommendation": "CONDITIONAL_APPROVE"
+  }
+}

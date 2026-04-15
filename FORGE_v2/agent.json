@@ -1,0 +1,109 @@
+{
+  "agent_id": "sba_lending_agent",
+  "version": "1.0.0",
+  "last_updated": "2026-04-15",
+  "owner": "Keith Williams",
+  "description": "Unified agent for SBA Lending Network (brokering + prospecting) and Swift Capital Underwriting (CIF). Router-first, halt-on-missing-input, versioned skills, audit logged.",
+
+  "skill_directory": "./skills/",
+  "policy_directory": "./policy/",
+  "audit_directory": "./audit/",
+  "golden_dataset_directory": "./golden/",
+
+  "routing": {
+    "routing_skill": "route_task",
+    "require_router_first": true,
+    "routing_confidence_threshold": 0.80,
+    "halt_on_routing_ambiguity": true
+  },
+
+  "execution_rules": {
+    "max_skill_chain_depth": 6,
+    "halt_on_missing_input": true,
+    "halt_on_low_confidence": true,
+    "log_skill_invocations": true,
+    "log_decision_rationale": true,
+    "output_format": "structured_json",
+    "temperature_for_calculation_skills": 0.0,
+    "temperature_for_drafting_skills": 0.3
+  },
+
+  "audit": {
+    "enabled": true,
+    "format": "jsonl",
+    "path_pattern": "audit/{deal_id}.jsonl",
+    "comms_audit_path": "audit/comms.jsonl",
+    "log_skill_selected": true,
+    "log_skill_version": true,
+    "log_inputs_hash": true,
+    "log_outputs_hash": true,
+    "log_policy_versions": true,
+    "append_only": true,
+    "retention_days": 2555
+  },
+
+  "mcp_servers": [
+    {
+      "name": "gmail_personal",
+      "account": "keithfwilliamsjr@gmail.com",
+      "used_for": ["personal"]
+    },
+    {
+      "name": "gmail_sba",
+      "account": "keith@sbalendingnetwork.com",
+      "used_for": ["sba_broker", "sba_prospecting", "comms"]
+    },
+    {
+      "name": "chrome",
+      "account": "keith@swiftcapitaloptions.com",
+      "used_for": ["swift_capital", "cif", "bizbuysell_mining"]
+    },
+    {
+      "name": "supabase",
+      "used_for": ["inbound_lead_reads"]
+    }
+  ],
+
+  "email_account_routing": {
+    "rule": "Swift Capital emails use chrome MCP only. Never Gmail MCP for keith@swiftcapitaloptions.com.",
+    "enforced_by_skill": "draft_outbound_email"
+  },
+
+  "data_retention": {
+    "borrower_pii_delete_after_days": 30,
+    "trigger_event": "committee_decision",
+    "keep_permanently": ["deal_data.json", "credit_memo_docx_pdf", "cash_flow_xlsx", "deal_notes_md", "audit_log"],
+    "delete": ["tax_returns", "credit_reports", "bank_statements", "personal_financial_statements"]
+  },
+
+  "hard_rules": [
+    "No outbound emails without Keith's explicit approval. Draft only.",
+    "Screenshot every outbound email at moment of send.",
+    "No MCA referrals. Ever.",
+    "No Colony Bank brokering (W-2 conflict).",
+    "CDFI fees are borrower-paid on separate engagement letter.",
+    "Form 159 on every SBA-backed brokered deal.",
+    "Swift Capital emails via Chrome MCP only.",
+    "G8WAY xlsx files are never written programmatically (openpyxl corrupts).",
+    "Every finalized deliverable has both DOCX and PDF companions.",
+    "Every number in narrative output verified against structured output (hallucination guard)."
+  ],
+
+  "quality_gates": {
+    "extraction_accuracy_target": 0.99,
+    "routing_accuracy_target": 0.99,
+    "skill_accuracy_target": 0.98,
+    "human_correction_rate_month_1": 0.05,
+    "human_correction_rate_month_3": 0.02,
+    "error_threshold_triggers_review": 0.02
+  },
+
+  "uncertainty_behavior": {
+    "on_missing_input": "halt",
+    "on_low_confidence_routing": "halt",
+    "on_ambiguous_trigger_overlap": "halt",
+    "on_unsupported_addback": "flag_and_skip",
+    "on_source_doc_missing": "halt",
+    "never_do": ["estimate_missing_numbers", "guess_document_contents", "auto_send_emails", "bypass_version_control"]
+  }
+}

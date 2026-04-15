@@ -1,0 +1,58 @@
+{
+  "_description": "Expected outputs for Mirzai Group LLC dba Munchies Market. RECONCILED 2026-04-15 against signed FINAL Loan Report dated 1-16-2026 (21pp, Colony SBSL archive).",
+  "_reconciliation_notes": {
+    "borrower_dscr_match": "EXACT — engine 1.39 = memo 1.39",
+    "ads_match": "$0.20 delta (engine $54,781.80 vs memo $54,782 — rounding)",
+    "bani_match": "$1 delta (engine $76,269 vs memo $76,268 — Decimal vs memo rounding)",
+    "global_dscr_variance": "0.02 (engine 1.65 vs memo 1.63). Adapter aggregates K-1 distributions from 3 affiliates as other_income; memo models each affiliate's CF and DS independently. Variance is expected and acceptable for a single-entity engine.",
+    "engine_tax_allocation_gap": "Engine models tax deduction only via required_distributions field. Memo applied $119 tax allocation — captured in fixture."
+  },
+  "_tolerance": {"money": 2.00, "ratio": 0.03, "pct": 0.01},
+  "deal_id": "MIRZAI_2026-01",
+
+  "expected": {
+    "intake_cif_checklist": {
+      "status": "ready_for_cashflow",
+      "product_type": "regular_loan",
+      "readiness_score_min": 90
+    },
+
+    "calculate_business_cash_flow": {
+      "status": "ok",
+      "adjusted_cash_flow": 76269.00,
+      "new_annual_debt_service": 54781.80,
+      "borrower_dscr": 1.39,
+      "threshold_applied": 1.25,
+      "pass_fail": "PASS",
+      "engine": "underwriteos.cashflow"
+    },
+
+    "calculate_global_cash_flow": {
+      "status": "ok",
+      "global_cf_numerator": 263069.00,
+      "global_ds_denominator": 159438.80,
+      "global_dscr": 1.65,
+      "threshold_applied": 1.10,
+      "pass_fail": "PASS",
+      "engine": "underwriteos.cashflow"
+    },
+
+    "run_cif_stress_tests": {
+      "status": "ok",
+      "scenarios": {
+        "personal_debt_x2": {"pass": true},
+        "living_x1_5": {"pass": true},
+        "combined": {"pass": true},
+        "revenue_minus_20": {"pass": true}
+      }
+    },
+
+    "write_committee_memo": {
+      "status": "ok",
+      "pages": [15, 25],
+      "required_sections": ["executive_summary", "borrower_profile", "use_of_proceeds", "business_cash_flow", "global_cash_flow", "stress_tests", "collateral", "risk_rating", "conditions", "recommendation"],
+      "number_verification_sweep": "pass",
+      "recommendation": "APPROVE"
+    }
+  }
+}

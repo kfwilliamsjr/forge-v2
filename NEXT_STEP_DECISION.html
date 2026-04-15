@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FORGE v2 — Next Step Decision Map</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 24px; background: #0b1220; color: #e6edf3; }
+  h1 { color: #2E8B8B; margin: 0 0 6px; font-size: 28px; }
+  .sub { color: #8b949e; margin: 0 0 20px; font-size: 14px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px; margin-bottom: 18px; }
+  .card h2 { margin: 0 0 10px; color: #2E8B8B; font-size: 17px; border-bottom: 1px solid #30363d; padding-bottom: 6px; }
+  .mermaid { background: #fff; border-radius: 8px; padding: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .fork { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 16px; }
+  .fork.a { border-left: 4px solid #4ade80; }
+  .fork.b { border-left: 4px solid #fbbf24; }
+  .fork.c { border-left: 4px solid #a78bfa; }
+  .fork h3 { margin: 0 0 4px; font-size: 15px; }
+  .fork .cost { color: #8b949e; font-size: 12px; margin: 0 0 10px; letter-spacing: .5px; }
+  .fork p { margin: 6px 0; font-size: 13px; line-height: 1.45; }
+  .label { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-right: 6px; }
+  .fix { background: #4ade80; color: #000; }
+  .cost-t { background: #fbbf24; color: #000; }
+  .risk { background: #fca5a5; color: #000; }
+  .stance { background: #fde68a; color: #000; padding: 14px 16px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 13px; line-height: 1.5; }
+  .stance b { color: #78350f; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #30363d; }
+  th { color: #2E8B8B; }
+  .gauge { display: flex; gap: 4px; }
+  .gauge span { width: 14px; height: 14px; border-radius: 2px; }
+  .g-on { background: #4ade80; }
+  .g-off { background: #30363d; }
+</style>
+</head>
+<body>
+
+<h1>FORGE v2 — Where We Are, What's Next</h1>
+<p class="sub">Three types of technical debt. Each has a different cost of carry. Pick the one you want to pay down first.</p>
+
+<div class="card">
+  <h2>1. Ground floor — what's actually locked</h2>
+  <p style="margin:0 0 14px; font-size:13px;">Think of the system as a building. Harness is the foundation inspection — we just passed it for 3 floors.</p>
+  <div class="mermaid">
+flowchart LR
+    F[Foundation<br/>underwriteos<br/>Decimal math]:::done
+    A[AIPSS 2026-03<br/>signed G8WAY<br/>✓ 1.23x exact]:::done
+    M[Mirzai 2026-01<br/>signed memo<br/>✓ 1.39x exact]:::done
+    AM[Amber 2026-04<br/>Festival PDF<br/>engine green<br/>memo NOT CHECKED]:::gap
+    H[Harness<br/>16/16 PASS]:::done
+
+    F --> A --> H
+    F --> M --> H
+    F --> AM --> H
+
+    classDef done fill:#4ade80,color:#000,stroke:#166534,stroke-width:2px
+    classDef gap fill:#fbbf24,color:#000,stroke:#b45309,stroke-width:2px
+  </div>
+  <p style="margin:12px 0 0; font-size:12px; color:#8b949e;">AIPSS + Mirzai are reconciled end-to-end. Amber PASSES but no human has held the engine output next to the signed PDF. That's a "probably right" floor.</p>
+</div>
+
+<div class="card">
+  <h2>2. Three debts on the books</h2>
+  <div class="grid3">
+
+    <div class="fork a">
+      <h3>A · Verification debt</h3>
+      <p class="cost">AMBER RECONCILIATION · ~20 min</p>
+      <p><span class="label fix">FIX</span>Confirms the third deal isn't quietly wrong.</p>
+      <p><span class="label cost-t">COST</span>Short. Read PDF, compare 4 numbers, annotate expected.</p>
+      <p><span class="label risk">SKIP</span>One of three "ground truth" deals may not be.</p>
+      <div class="gauge" title="impact / effort"><span class="g-on"></span><span class="g-on"></span><span class="g-on"></span><span class="g-off"></span><span class="g-off"></span></div>
+      <p style="font-size:11px; color:#8b949e;">impact: confidence · effort: low</p>
+    </div>
+
+    <div class="fork b">
+      <h3>B · Knowledge debt</h3>
+      <p class="cost">OWNER COMP POLICY · ~45 min</p>
+      <p><span class="label fix">FIX</span>Writes the S-corp addback rule into <code>cif_procedures.yaml</code> — the policy stops living only in Keith's head + per-fixture flags.</p>
+      <p><span class="label cost-t">COST</span>One yaml block + a cross-reference in the cash-flow skill.</p>
+      <p><span class="label risk">SKIP</span>Next fixture forgets the flag → fiction creeps back in. This is exactly how AIPSS drifted to 2.25x last time.</p>
+      <div class="gauge"><span class="g-on"></span><span class="g-on"></span><span class="g-on"></span><span class="g-on"></span><span class="g-off"></span></div>
+      <p style="font-size:11px; color:#8b949e;">impact: drift-prevention · effort: low</p>
+    </div>
+
+    <div class="fork c">
+      <h3>C · Precision debt</h3>
+      <p class="cost">TAX + AFFILIATE ENGINE · 2-4 hrs</p>
+      <p><span class="label fix">FIX</span>First-class <code>tax_allocation</code> field + affiliate CF aggregator in <code>IncomeStatement</code>. Kills the two Mirzai shims.</p>
+      <p><span class="label cost-t">COST</span>Real Python work. New fields, new tests, adapter changes, every fixture touched.</p>
+      <p><span class="label risk">SKIP</span>Global DSCR stays ±0.02 fuzzy on multi-affiliate deals. Acceptable today — not acceptable at scale.</p>
+      <div class="gauge"><span class="g-on"></span><span class="g-on"></span><span class="g-on"></span><span class="g-on"></span><span class="g-on"></span></div>
+      <p style="font-size:11px; color:#8b949e;">impact: precision · effort: high</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. Metaphor — which crack are you sealing?</h2>
+  <div class="mermaid">
+flowchart TB
+    subgraph BUILDING [FORGE v2 Building]
+      R[Roof: Skills + Deliverables]
+      W[Walls: Policy YAMLs]
+      FL[Floor: Golden Harness]
+      FD[Foundation: underwriteos math]
+    end
+
+    A[A · Amber check<br/>inspect the 3rd tile<br/>on the floor]:::a
+    B[B · Owner-comp policy<br/>mortar a loose brick<br/>in the wall]:::b
+    C[C · Tax/affiliate engine<br/>re-pour part of<br/>the foundation]:::c
+
+    A -.patch.-> FL
+    B -.patch.-> W
+    C -.patch.-> FD
+
+    classDef a fill:#4ade80,color:#000,stroke:#166534
+    classDef b fill:#fbbf24,color:#000,stroke:#b45309
+    classDef c fill:#a78bfa,color:#000,stroke:#5b21b6
+  </div>
+</div>
+
+<div class="card">
+  <h2>4. My stance</h2>
+  <div class="stance">
+    <b>Order:</b> A → B → C.<br/><br/>
+    A is 20 minutes and closes a "probably right" hole — do it first, cheap.<br/>
+    B is the highest-leverage move per hour. It's the exact mechanism that let AIPSS drift to 2.25x. Writing it into YAML converts tribal knowledge into enforced policy. Do it second.<br/>
+    C is real engineering and should wait until a deal actually needs multi-affiliate precision. Today's ±0.02 fuzz is inside tolerance. Defer.<br/><br/>
+    <b>If you only pick one: B.</b> It's the only one that prevents future fiction.
+  </div>
+</div>
+
+<div class="card">
+  <h2>5. Decision table</h2>
+  <table>
+    <tr><th>Fork</th><th>Prevents</th><th>Effort</th><th>Unblocks</th></tr>
+    <tr><td><b>A · Amber</b></td><td>Silent wrong number in "ground truth"</td><td>20 min</td><td>Confidence to cite all 3 fixtures externally</td></tr>
+    <tr><td><b>B · Owner comp</b></td><td>Fixture drift back into fiction</td><td>45 min</td><td>Safe S-corp fixture authoring without Keith-in-the-loop</td></tr>
+    <tr><td><b>C · Engine</b></td><td>±0.02 global DSCR fuzz on multi-entity</td><td>2-4 hrs</td><td>Exact reconciliation on TTH, Heavy Highway, Elite Cargo</td></tr>
+  </table>
+</div>
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#D5E8E8', primaryTextColor: '#000', primaryBorderColor: '#2E8B8B', lineColor: '#2E8B8B', fontFamily: 'ui-sans-serif, system-ui' }, flowchart: { curve: 'basis', padding: 12 } });
+</script>
+</body>
+</html>

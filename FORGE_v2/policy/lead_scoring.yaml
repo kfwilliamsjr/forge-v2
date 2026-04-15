@@ -1,0 +1,230 @@
+# Lead Scoring & Outreach Priority — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Source: LEAD_MONETIZATION_PLAYBOOK.md + borrower-prospecting legacy skill
+# This YAML is the SINGLE SOURCE OF TRUTH for all lead/prospect scoring weights.
+
+policy_version: 1.0.0
+effective_date: 2026-04-15
+owner: Keith Williams
+
+# =====================================================================
+# INBOUND LEAD SCORING — 100-point model
+# Used by: score_inbound_leads, intake_broker_client
+# =====================================================================
+inbound_lead_scoring:
+  max_score: 100
+
+  deal_fit:
+    max_points: 40
+    factors:
+      loan_amount_in_sweet_spot:
+        points: 15
+        rule: "loan_amount between 350000 and 5000000 (SBA 7(a) sweet spot)"
+      loan_amount_acceptable:
+        points: 8
+        rule: "loan_amount between 150000 and 349999 OR between 5000001 and 10000000"
+      loan_amount_out_of_range:
+        points: 0
+        rule: "loan_amount < 150000 OR > 10000000"
+      industry_top_tier:
+        points: 15
+        rule: "industry in [medical, dental, veterinary, pharmacy, cre_secured_professional, franchise_fund_750_plus]"
+      industry_acceptable:
+        points: 8
+        rule: "industry in [branded_gas_station, flag_hotel, established_profitable_5yr, franchise_fund_600_749]"
+      industry_lowest_tier:
+        points: 3
+        rule: "industry in [car_wash, rv_park, startup_no_cre]"
+      industry_prohibited:
+        points: -999   # auto-disqualify
+        rule: "industry in [cannabis, nursing_home, assisted_living, golf_course]"
+      deal_type_acquisition:
+        points: 10
+        rule: "deal_type == acquisition AND has_cre_component"
+      deal_type_cre_purchase:
+        points: 10
+      deal_type_expansion:
+        points: 7
+      deal_type_refinance:
+        points: 5
+      deal_type_equipment:
+        points: 3
+
+  borrower_quality:
+    max_points: 30
+    factors:
+      credit_excellent:
+        points: 15
+        rule: "credit_score >= 720"
+      credit_strong:
+        points: 12
+        rule: "credit_score between 680 and 719"
+      credit_acceptable:
+        points: 8
+        rule: "credit_score between 640 and 679"
+      credit_subprime:
+        points: 2
+        rule: "credit_score between 600 and 639"
+      credit_poor:
+        points: -10
+        rule: "credit_score < 600 — Tier 4 route"
+      equity_injection_strong:
+        points: 10
+        rule: "equity_injection_pct >= 0.15"
+      equity_injection_adequate:
+        points: 6
+        rule: "equity_injection_pct between 0.10 and 0.1499"
+      equity_injection_weak:
+        points: 0
+        rule: "equity_injection_pct < 0.10"
+      industry_experience:
+        points: 5
+        rule: "borrower has 3+ years direct industry management experience"
+
+  engagement_signals:
+    max_points: 20
+    factors:
+      form_completeness_full:
+        points: 8
+        rule: "all intake fields populated"
+      form_completeness_partial:
+        points: 3
+      docs_pre_uploaded:
+        points: 5
+        rule: "borrower uploaded tax returns / bank statements with inquiry"
+      responded_within_24h:
+        points: 4
+      booked_discovery_call:
+        points: 3
+      warm_referral_source:
+        points: 5
+        rule: "lead_source in [referral, warm_intro]"
+      recaptcha_score_high:
+        points: 2
+        rule: "recaptcha_score >= 0.7 (fraud/bot check)"
+      recaptcha_score_low:
+        points: -5
+        rule: "recaptcha_score < 0.5"
+
+  revenue_potential:
+    max_points: 10
+    factors:
+      full_service_uw_engagement:
+        points: 10
+        rule: "service_level == full_service (3% commission)"
+      real_estate_deal:
+        points: 7
+        rule: "service_level == real_estate (2% commission)"
+      standard_referral:
+        points: 4
+        rule: "service_level == standard (1% commission)"
+      expected_commission_gte_50k:
+        points: 5
+        rule: "est_commission >= 50000"
+      expected_commission_gte_15k:
+        points: 3
+        rule: "est_commission between 15000 and 49999"
+
+# =====================================================================
+# TIER ROUTING — maps total score to action
+# =====================================================================
+tier_routing:
+  tier_1:
+    score_min: 85
+    score_max: 100
+    label: "HOT — Colony top-tier fit"
+    action: "Call within 24h. Full service engagement."
+    sla_hours: 24
+    service_level_suggested: full_service
+  tier_2:
+    score_min: 70
+    score_max: 84
+    label: "WARM — strong candidate"
+    action: "Email + discovery call this week."
+    sla_hours: 72
+    service_level_suggested: real_estate
+  tier_3:
+    score_min: 55
+    score_max: 69
+    label: "NURTURE"
+    action: "Info-gather + nurture sequence."
+    sla_hours: 168
+    service_level_suggested: standard
+  tier_4:
+    score_min: 0
+    score_max: 54
+    label: "CREDIT REPAIR / CHARACTER"
+    action: "Route to PeopleFund + Clearinghouse CDFI + nurture."
+    sla_hours: 336
+    triggers: [credit_poor, bankruptcy_disclosed, character_issues]
+  tier_5:
+    score_min: -9999
+    score_max: -1
+    label: "DECLINE — MCA / ineligible / prohibited industry"
+    action: "Send decline email with referral-out. Exit pipeline."
+    auto_decline: true
+
+# =====================================================================
+# MCA / PROHIBITED AUTO-DECLINE TRIGGERS (Step 0 pre-filter)
+# =====================================================================
+auto_decline_triggers:
+  - "product_requested == mca"
+  - "product_requested == factor_rate"
+  - "industry in [cannabis, adult_entertainment, gambling, firearms_mfg]"
+  - "borrower flagged on CAIVRS (federal delinquency)"
+  - "borrower is Colony Bank pipeline (employment conflict)"
+
+# =====================================================================
+# OUTREACH PRIORITY WEIGHTS — B2B lender/CDFI prospecting
+# Used by: rank_outreach_prospects
+# =====================================================================
+outreach_priority_weights:
+  warm_contact_former_employer:
+    points: 30
+    applies_when: "prospect in [Firstrust, Republic_Bank, VestedIn, FBCO, MVB] alumni_network"
+  prior_communication_awaiting_reply:
+    points: 15
+    applies_when: "last_contact_days <= 30 AND response_status == pending"
+  high_volume_potential:
+    points: 20
+    applies_when: "prospect in [WSFS, Reinvestment_Fund, PIDC, Live_Oak, Newtek]"
+  mission_alignment_cdfi:
+    points: 15
+    applies_when: "prospect.type == CDFI OR prospect.mbe_focused == true OR prospect.cra_motivated == true"
+  geographic_proximity_philly:
+    points: 10
+    applies_when: "prospect.metro == Philadelphia"
+  mbe_cert_advantage:
+    points: 10
+    applies_when: "prospect.prefers_mbe_vendors == true"
+  no_response_to_prior:
+    points: -10
+    applies_when: "previously_contacted == true AND response_status == silent"
+  long_followup_gap:
+    points: -5
+    applies_when: "last_contact_days > 14"
+
+outreach_classification:
+  call_today:
+    score_min: 50
+    action: "Phone first if number available"
+  email_this_week:
+    score_min: 25
+    score_max: 49
+    action: "Personalized email draft"
+  nurture:
+    score_min: 10
+    score_max: 24
+    action: "Newsletter / quarterly touch"
+  park:
+    score_max: 9
+    action: "Cold storage, revisit quarterly"
+
+# =====================================================================
+# DO-NOT-CONTACT EXCLUSIONS (universal)
+# =====================================================================
+dnc_statuses:
+  - DNC
+  - rejected_definite
+  - unsubscribed
+  - competitor_locked

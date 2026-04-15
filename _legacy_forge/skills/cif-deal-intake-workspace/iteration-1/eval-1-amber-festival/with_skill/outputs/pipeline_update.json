@@ -1,0 +1,25 @@
+{
+  "id": "amber-alexander",
+  "borrower": "Amber Alexander",
+  "deal_type": "festival_loan",
+  "request_amount": null,
+  "status": "pending_docs",
+  "stage": "intake",
+  "assigned_to": "keith",
+  "priority": "medium",
+  "dates": {
+    "intake": "2026-04-10",
+    "docs_requested": "2026-04-10"
+  },
+  "key_metrics": {},
+  "issues": [
+    "All documents in ShareFile — need to pull to local folder",
+    "5 blocker items: Application, Readiness Form, Credit Report, Photo ID, Tax Returns"
+  ],
+  "next_action": "Pull documents from ShareFile, then run cash flow analysis",
+  "deliverables": {
+    "deal_data": "deal_data.json — created 2026-04-10",
+    "deal_notes": "Amber_Alexander_Deal_Notes.md — existing",
+    "draft_report": "Festival_Loan_Report_Amber_Alexander_DRAFT.docx — existing"
+  }
+}

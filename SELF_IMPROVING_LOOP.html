@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FORGE v2 — Self-Improving Loop</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; padding: 24px; background: #0b1220; color: #e6edf3; line-height: 1.55; }
+  h1 { color: #2E8B8B; margin: 0 0 6px; font-size: 28px; }
+  .sub { color: #8b949e; margin: 0 0 22px; font-size: 14px; }
+  .card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 22px; margin-bottom: 18px; }
+  .card h2 { margin: 0 0 12px; color: #2E8B8B; font-size: 17px; border-bottom: 1px solid #30363d; padding-bottom: 8px; }
+  .card p { font-size: 14px; margin: 8px 0; }
+  .mermaid { background: #fff; border-radius: 8px; padding: 14px; }
+  .stance { background: #fde68a; color: #1c1917; padding: 16px; border-radius: 6px; font-size: 14px; line-height: 1.65; }
+  .stance b { color: #7c2d12; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px; border-bottom: 1px solid #30363d; vertical-align: top; }
+  th { color: #2E8B8B; }
+  code { background: #0d1117; padding: 2px 5px; border-radius: 3px; color: #79c0ff; font-size: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .box { background: #0d1117; border-radius: 8px; padding: 14px; border: 1px solid #30363d; }
+  .box.good { border-left: 4px solid #4ade80; }
+  .box.risk { border-left: 4px solid #fca5a5; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-right: 6px; }
+  .p-do { background: #4ade80; color: #000; }
+  .p-no { background: #ef4444; color: #fff; }
+  .p-lev { background: #fbbf24; color: #000; }
+  ol li, ul li { margin: 6px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<h1>FORGE v2 — The Self-Improving Loop</h1>
+<p class="sub">How the machine learns, audits itself, and gets faster. Plus: company-first posture, consolidation plan, and the next-step sequence to the end goal.</p>
+
+<!-- Panel 1: The loop itself -->
+<div class="card">
+  <h2>1. The loop — how the machine should teach itself</h2>
+  <div class="mermaid">
+flowchart LR
+    IN[Intake<br/>deal lands]
+    EX[Execute<br/>skills fire]
+    DL[Deliver<br/>memo + XLSX + PDF]
+    AUD[Audit<br/>log every number]
+    REC[Reconcile<br/>vs signed memo]
+    REF[Refine<br/>fixture + policy]
+    IMP[Improve<br/>skill + engine]
+
+    IN --> EX --> DL --> AUD --> REC --> REF --> IMP --> IN
+
+    AUD -. writes .-> L1[(audit/deal_id.jsonl)]
+    REC -. writes .-> L2[(golden/expected/*.json)]
+    REF -. writes .-> L3[(policy/*.yaml)]
+    IMP -. writes .-> L4[(skills + underwriteos)]
+
+    H[Harness<br/>16/16 green gate] -.blocks merge.-> IMP
+
+    classDef stage fill:#D5E8E8,color:#000,stroke:#2E8B8B,stroke-width:2px
+    classDef log fill:#fde68a,color:#000
+    classDef gate fill:#fca5a5,color:#000
+    class IN,EX,DL,AUD,REC,REF,IMP stage
+    class L1,L2,L3,L4 log
+    class H gate
+  </div>
+  <p>Every deal that closes feeds the machine. Audit logs capture raw engine output. Reconciliation pins the signed-memo number as the regression target. Refinement updates the policy YAML when a rule shifts. Improvement changes the engine or skill. The harness is the gate: no change merges without 16/16 green.</p>
+  <p><b>Today you have:</b> Execute, Deliver, Audit, Reconcile (just did it for 3 deals), Harness. <b>Missing:</b> the Refine and Improve arrows closing automatically. Today those are manual.</p>
+</div>
+
+<!-- Panel 2: Acceleration levers -->
+<div class="card">
+  <h2>2. Acceleration levers — things you own that you aren't using hard enough</h2>
+  <table>
+    <tr><th>Lever</th><th>What it does</th><th>Speed gain</th></tr>
+    <tr><td><code>schedule</code> skill</td><td>Nightly harness run, nightly portfolio digest, weekly lead-mining, weekly memory consolidation</td><td>Converts active time to passive time. 3-5 hrs/wk saved.</td></tr>
+    <tr><td><code>consolidate-memory</code> skill</td><td>Merges duplicate MD facts, prunes stale entries, keeps CLAUDE.md lean</td><td>Context window stays clean. Faster session starts.</td></tr>
+    <tr><td><code>skill-creator</code></td><td>Scaffold new skills in minutes, fork existing ones</td><td>New skill authoring: 2 hrs → 20 min.</td></tr>
+    <tr><td>Built-in <code>docx</code> / <code>xlsx</code> / <code>pdf</code></td><td>Use for memo rendering, workbook generation, final PDFs — not hand-rolled Python</td><td>Kills the G8WAY openpyxl corruption class of bug. 30-50% less custom code.</td></tr>
+    <tr><td>GitHub (just pushed)</td><td>Pre-commit hook runs <code>run_golden.py</code>. GitHub Actions can run harness on every PR.</td><td>Regression becomes automatic. Stops "last session broke something" incidents.</td></tr>
+    <tr><td>MCP connectors (not yet wired)</td><td>ShareFile, Supabase, QuickBooks, Gmail — direct API access instead of Chrome clicking</td><td>Auto-ingestion. 10x faster for document intake.</td></tr>
+    <tr><td>Audit JSONL (already dumped per deal)</td><td>Mine for skill metrics: fire count, success rate, time-to-decision, delta vs signed memo</td><td>You see which skills need refinement; gives you the Refine → Improve arrow.</td></tr>
+  </table>
+</div>
+
+<!-- Panel 3: Folder consolidation -->
+<div class="card">
+  <h2>3. Folder consolidation — everything new goes under Agentic_Overhaul/</h2>
+  <div class="mermaid">
+flowchart TB
+    subgraph AO [Agentic_Overhaul - the only build surface]
+        direction TB
+        FORGE[FORGE_v2/<br/>skills + policy + golden + audit]
+        OPS[operations/<br/>references + templates + legacy ops]
+        PORT[portfolio/<br/>portfolio.json + PORTFOLIO.html]
+        CDFI[cdfi_presentations/<br/>Swift monthly report, pitch deck, case studies]
+        STRAT[strategic/<br/>SYSTEM_MAP_v2.html<br/>STRATEGIC_MAP.html<br/>SELF_IMPROVING_LOOP.html<br/>LIVE_STATE.html regenerated]
+        LIVE[_legacy_forge/<br/>underwriteos engine, DO NOT MODIFY directly]
+    end
+
+    OLD1[Playbooks/]:::old
+    OLD2[FORGE/]:::old
+    OLD3[Swift Capital Underwriting/]:::client
+    OLD4[Grant_Applications/]:::old
+
+    OLD1 -.historical reference only.-> AO
+    OLD2 -.historical reference only.-> AO
+    OLD3 -.client workspace — do NOT build here.-> AO
+    OLD4 -.historical reference only.-> AO
+
+    classDef core fill:#4ade80,color:#000,stroke:#166534,stroke-width:2px
+    classDef old fill:#c4b5fd,color:#000
+    classDef client fill:#fca5a5,color:#000
+    class FORGE,OPS,PORT,CDFI,STRAT,LIVE core
+  </div>
+  <p><b>Two new folders to create:</b></p>
+  <ul>
+    <li><code>Agentic_Overhaul/portfolio/</code> — <code>portfolio.json</code> + <code>PORTFOLIO.html</code> (regenerated). This is your loom.</li>
+    <li><code>Agentic_Overhaul/cdfi_presentations/</code> — monthly report template for Akem, Swift case study deck, pitch one-pager for other CDFIs. Becomes your sales collateral folder.</li>
+  </ul>
+  <p>One living strategic dashboard (<code>strategic/LIVE_STATE.html</code>) auto-regenerates weekly from portfolio.json + harness results + audit metrics. You always know where the company stands.</p>
+</div>
+
+<!-- Panel 4: Company-first posture -->
+<div class="card">
+  <h2>4. Company-first posture — stop leaking into client infrastructure</h2>
+  <div class="grid2">
+    <div class="box risk">
+      <p><span class="pill p-no">CURRENT LEAK</span></p>
+      <ul>
+        <li>Swift Capital work routes through <code>keith@swiftcapitaloptions.com</code> (client's Google Workspace)</li>
+        <li>Deal documents live in CIF's ShareFile — you download copies but the system of record is theirs</li>
+        <li>Committee emails route through client-owned threads</li>
+        <li>CIF procedures and templates are stored in <code>Swift Capital Underwriting/</code> — outside your build tree</li>
+      </ul>
+      <p style="color:#fca5a5; font-size:12px;"><b>Risk:</b> If the contract ends, you lose access to most of the workflow history. The IP you're building leaks into their stack.</p>
+    </div>
+    <div class="box good">
+      <p><span class="pill p-do">COMPANY-FIRST FIX</span></p>
+      <ul>
+        <li>All outbound deliverables for Swift route through <code>keith@sbalendingnetwork.com</code>, CC'ing Swift addresses — not FROM them</li>
+        <li>Every Swift deal mirrored into <code>Agentic_Overhaul/portfolio/deals/{deal_id}/</code> on your drive + GitHub</li>
+        <li>CIF procedures YAML (<code>cif_procedures.yaml</code>) lives in YOUR repo — it's your IP, not theirs</li>
+        <li>Monthly CDFI presentations generated from YOUR portfolio.json, delivered as PDFs branded <b>SBA Lending Network / Swift Capital Services</b></li>
+        <li>ShareFile MCP when built: pulls docs INTO your pipeline, never pushes into theirs</li>
+      </ul>
+      <p style="color:#4ade80; font-size:12px;"><b>Benefit:</b> Contract-portable. Licensable. When you sell this to the next CDFI, nothing has to move.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Panel 5: The next-step sequence -->
+<div class="card">
+  <h2>5. The sequence to the end goal</h2>
+  <div class="mermaid">
+flowchart LR
+    S1[Step 1<br/>Portfolio State Machine<br/>+ Decision Inbox<br/>~2-3 hrs]:::now
+    S2[Step 2<br/>Scheduled Audit Loop<br/>nightly harness +<br/>weekly memory consol.<br/>~1 hr]:::next
+    S3[Step 3<br/>CDFI Presentation Kit<br/>monthly report template<br/>+ Swift case study<br/>~2 hrs]:::next
+    S4[Step 4<br/>Auto-ingestion MCPs<br/>Gmail + ShareFile<br/>~3-4 hrs]:::soon
+    S5[Step 5<br/>Metrics + Feedback<br/>skill success rates<br/>audit JSONL digest<br/>~2 hrs]:::soon
+    S6[Step 6<br/>Multi-tenant packaging<br/>policy overrides per client<br/>~1 week]:::later
+    S7[Step 7<br/>License-ready product<br/>auth + SLA + pricing<br/>~2-3 weeks]:::later
+
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7
+
+    G[End goal:<br/>underwrite CDFI + bank portfolios<br/>+ own book + license]:::goal
+    S7 --> G
+
+    classDef now fill:#4ade80,color:#000,stroke:#166534,stroke-width:3px
+    classDef next fill:#fbbf24,color:#000,stroke:#b45309,stroke-width:2px
+    classDef soon fill:#93c5fd,color:#000
+    classDef later fill:#c4b5fd,color:#000
+    classDef goal fill:#2E8B8B,color:#fff,stroke:#0f4c4c
+  </div>
+  <p><b>Where you sit today:</b> engine 90% done, operator surface 10%. Step 1 lifts operator surface to 50% in one session. Steps 2-3 get you self-auditing + sales-collateral-ready. Steps 4-5 unlock automation scale. Steps 6-7 are licensing packaging and should not start until 1-5 are live.</p>
+</div>
+
+<!-- Panel 6: Stance -->
+<div class="card">
+  <h2>6. Stance — the sequence, in order</h2>
+  <div class="stance">
+    <b>Step 1 next: Portfolio State Machine + Decision Inbox. Built inside <code>Agentic_Overhaul/portfolio/</code>. One session.</b><br/><br/>
+    Why this first: it's the visibility you said you're missing ("I'm building but cannot see what is going on"). Without it, everything else is more code you can't see. With it, you have a single HTML you open from your desktop showing every deal, every stage, every decision waiting on you.<br/><br/>
+    <b>Step 2 right after: Scheduled Audit Loop.</b> Nightly harness run + weekly memory consolidation + monthly skill-metric digest. One hour of setup. Converts you from "I run the harness when I remember" to "the harness runs itself and tells me when something broke."<br/><br/>
+    <b>Step 3 after that: CDFI Presentation Kit.</b> Monthly report template generated from your portfolio.json. Branded as SBA Lending Network. Turns your CIF work into sales material for the next CDFI. Feeds the licensing goal.<br/><br/>
+    <b>Steps 4-7 wait.</b> Don't start MCP connectors, metrics dashboards, or multi-tenant packaging until 1-3 are live and you've run them against one real month of Swift Capital work. If those three ship and you can't tell me they saved you time, something's wrong with the design and I'll rebuild before adding surface area.<br/><br/>
+    <b>Hard rule:</b> every session from here ends with a 16/16 green harness. No exceptions. That's the "well-oiled machine" discipline.
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#D5E8E8', primaryTextColor: '#000', primaryBorderColor: '#2E8B8B', lineColor: '#2E8B8B', fontFamily: 'ui-sans-serif, system-ui' }, flowchart: { curve: 'basis', padding: 12 } });
+</script>
+</body>
+</html>

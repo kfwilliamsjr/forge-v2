@@ -1,0 +1,177 @@
+{
+  "_meta": {
+    "description": "Agent-optimized pipeline state. Human-readable version: SWIFT_CAPITAL_SERVICE_PLAN.md",
+    "updated": "2026-04-13",
+    "client": "Swift Capital / CIF (RTPark Community Impact Fund)"
+  },
+  "deals": [
+    {
+      "id": "jj-creationz",
+      "borrower": "JJ Creationz (Joyann James)",
+      "deal_type": "festival_loan",
+      "request_amount": 12500,
+      "status": "committee_review",
+      "stage": "awaiting_committee_decision",
+      "assigned_to": "keith",
+      "priority": "high",
+      "dates": {
+        "intake": "2026-04-03",
+        "docs_requested": "2026-03-31",
+        "memo_delivered": "2026-04-08",
+        "committee_submitted": "2026-04-09",
+        "last_committee_activity": "2026-04-11"
+      },
+      "key_metrics": {
+        "annual_revenue": 3399,
+        "grant_to_revenue_ratio": 3.7,
+        "readiness_score": "override_pending"
+      },
+      "issues": [
+        "Readiness score override required — grant amount exceeds revenue 3.7x",
+        "Sources/uses misalignment flagged",
+        "Vendor documentation bottleneck",
+        "Ronnie raised micro-loan approval authority question (4/11) — awaiting Akem response"
+      ],
+      "next_action": "Akem to respond to Ronnie's approval authority question, then committee decision",
+      "deliverables": {
+        "credit_memo": "JJ_Creationz_Credit_Memo_2026-04-08_v2.docx",
+        "cash_flow": "JJ_Creationz_Cash_Flow_Workbook_2026-04-08.xlsx",
+        "deal_notes": "JJ_Creationz_Deal_Notes.md"
+      }
+    },
+    {
+      "id": "amber-alexander",
+      "borrower": "Amber Alexander",
+      "deal_type": "festival_loan",
+      "request_amount": 15000,
+      "status": "memo_submitted",
+      "stage": "awaiting_akem_review",
+      "assigned_to": "keith",
+      "priority": "high",
+      "dates": {
+        "application": "2026-03-12",
+        "intake": "2026-04-05",
+        "docs_updated": "2026-04-10",
+        "cash_flow_built": "2026-04-10",
+        "memo_drafted": "2026-04-10",
+        "memo_sent_to_akem": "2026-04-13"
+      },
+      "key_metrics": {
+        "credit_score": 752,
+        "annual_revenue_stated": 20000,
+        "projected_carnival_revenue": 24560,
+        "projected_pretax_profit": 14560,
+        "readiness_score": "4/14",
+        "booth_number": 23,
+        "personal_debt_monthly": 967,
+        "term_months": 36,
+        "rate": 0.09,
+        "monthly_payment": 477.00,
+        "annual_debt_service": 5723.95,
+        "dscr_business": 2.07,
+        "dscr_global_biz_only": 0.29,
+        "dscr_business_verdict": "PASS",
+        "personal_income_needed_110x": 33604
+      },
+      "issues": [
+        "Readiness score 4/14 — TA band, Akem overrode to proceed",
+        "No historical tax returns — DSCR relies on projections",
+        "No business bank account",
+        "Business start date discrepancy (app: 4/1/2026 vs readiness: 11 years)",
+        "Global DSCR fails without personal income — Path A conditioned"
+      ],
+      "next_action": "Awaiting Akem/Nikky review. Memo + cash flow workbook + PDF sent 4/13. Conditional approve recommended — 3 conditions noted.",
+      "deliverables": {
+        "deal_data": "deal_data.json",
+        "deal_notes": "Amber_Alexander_Deal_Notes.md",
+        "g8way_reference": "Amber_Alexander_G8WAY_Reference.md",
+        "festival_loan_report_docx": "Festival_Loan_Report_Amber_Alexander_2026-04-10.docx",
+        "festival_loan_report_pdf": "Festival_Loan_Report_Amber_Alexander_2026-04-10.pdf"
+      }
+    },
+    {
+      "id": "alvins-hot-sauce",
+      "borrower": "Alvin's Hot Sauce",
+      "deal_type": "vi_leap_grant",
+      "request_amount": null,
+      "status": "readiness_review",
+      "stage": "docs_in_review",
+      "assigned_to": "keith",
+      "priority": "medium",
+      "dates": {},
+      "key_metrics": {},
+      "issues": ["18-message email thread — readiness review in progress (last activity 4/9)"],
+      "next_action": "Complete readiness assessment",
+      "deliverables": {}
+    },
+    {
+      "id": "crucian-corks-lockhart",
+      "borrower": "Crucian Corks / Lockhart Mas Band",
+      "deal_type": "vi_leap_grant",
+      "request_amount": null,
+      "status": "entity_clarification",
+      "stage": "pre_intake",
+      "assigned_to": "keith",
+      "priority": "low",
+      "dates": {},
+      "key_metrics": {},
+      "issues": ["Entity structure unclear — are these separate applications?"],
+      "next_action": "Clarify with Akem",
+      "deliverables": {}
+    },
+    {
+      "id": "cultured-delights",
+      "borrower": "Cultured Delights",
+      "deal_type": "vi_leap_grant",
+      "request_amount": null,
+      "status": "application_received",
+      "stage": "docs_uploaded",
+      "assigned_to": "keith",
+      "priority": "medium",
+      "dates": {
+        "application_uploaded": "2026-04-09",
+        "grant_checklist_received": "2026-04-09"
+      },
+      "key_metrics": {},
+      "issues": ["New — grant checklist included, needs initial review"],
+      "next_action": "Begin readiness review using uploaded docs in ShareFile",
+      "deliverables": {}
+    }
+  ],
+  "closed_deals": [
+    {
+      "id": "tropical-treasure-hunt",
+      "borrower": "Tropical Treasure Hunt Co LLC",
+      "deal_type": "regular_loan",
+      "request_amount": 250000,
+      "status": "declined",
+      "decision_date": "2026-04-07",
+      "reason": "Internal decline — DSCR concerns, process lesson captured"
+    },
+    {
+      "id": "boundless-bliss",
+      "borrower": "Boundless Bliss Hotel",
+      "deal_type": "regular_loan",
+      "request_amount": 250000,
+      "status": "declined",
+      "reason": "Credit score below threshold (556 EQ)"
+    },
+    {
+      "id": "brew-house",
+      "borrower": "The Brew House",
+      "deal_type": "vi_leap_grant",
+      "request_amount": 15000,
+      "status": "flagged",
+      "reason": "Grant eligibility concern — awaiting Akem disposition"
+    }
+  ],
+  "contract": {
+    "base_rate": 1000,
+    "escalator_5_loans": 1500,
+    "escalator_vieo": 2000,
+    "march_production": 4,
+    "april_production": 2,
+    "april_target": "2-3 deals/week",
+    "last_pipeline_report": "2026-04-13"
+  }
+}

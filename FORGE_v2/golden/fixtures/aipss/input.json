@@ -1,0 +1,102 @@
+{
+  "_description": "Golden fixture — Advanced Integrated Pain & Spine Solutions (AIPSS). Real Colony SBSL SBA 7(a) deal signed 2026-03-11. Medical practice expansion, CRE-secured. Y1/Y2 numbers extracted from Bank-Adjusted columns (G/I) of G8WAY DSCR (UW) tab. Used as Tier 1 reference: DSCR calc + grid match + full deliverable path.",
+  "_source_docs": [
+    "knowledge-base/sample-deals/G8WAY_Advanced Integrated Pain_3-11-2026.xlsx",
+    "Credit memo AIPSS 2026-03-11 (22 pages, Colony SBSL archive)",
+    "_legacy_forge/underwriteos/tests/fixtures/advanced_integrated_pain.json"
+  ],
+  "_pii_status": "business numbers real from signed G8WAY; personal financials SYNTHESIZED (no PFS available on disk). Scrub before open-source.",
+  "_reconciled_against_g8way": "2026-04-15",
+  "deal_id": "AIPSS_2026-03",
+  "lane": "sba_broker_validation",
+  "product_type": "sba_7a",
+  "policy_version": "1.0.0",
+
+  "borrower": {
+    "legal_name": "Advanced Integrated Pain & Spine Solutions PLLC",
+    "entity_type": "S_corp",
+    "state": "FL",
+    "industry_naics": "621111",
+    "industry_label": "medical_practice",
+    "years_in_business": 8
+  },
+
+  "request": {
+    "deal_type": "expansion",
+    "loan_amount": 1699000,
+    "loan_term_months": 300,
+    "rate": 0.1150,
+    "rate_type": "variable",
+    "use_of_proceeds": {
+      "cre_purchase": 1300000,
+      "working_capital": 150000,
+      "equipment": 200000,
+      "soft_costs_fees": 49000
+    },
+    "collateral": {
+      "cre_value_improved": 1500000,
+      "equipment_new": 200000
+    },
+    "equity_injection_pct": 0.10
+  },
+
+  "financials_business": {
+    "tax_year": 2026,
+    "scenario": "year_1_bank_adjusted",
+    "gross_revenue": 725000,
+    "net_income": 31923.91,
+    "depreciation": 34936.71,
+    "amortization": 0,
+    "interest_expense": 152140.78,
+    "owner_compensation": 0,
+    "owner_compensation_addback": false,
+    "_note_owner_comp": "Colony did NOT add back owner comp. W-2 salary of $285K is expected to continue as an operating deduction; BANI = NI + D + A + Int only.",
+    "one_time_expenses": 0,
+    "required_distributions": 0,
+    "rent_paid_to_owner_re": 0
+  },
+
+  "financials_personal": {
+    "_note": "SYNTHESIZED — no PFS on disk. W-2 pulled from owner_compensation; personal DS/living/liquid are placeholders. Global DSCR from this fixture is ESTIMATE ONLY and not reconciled against memo.",
+    "w2_income": 285000,
+    "other_income": 0,
+    "personal_debt_annual": 48000,
+    "living_expenses_annual": 96000,
+    "liquid_assets": 420000
+  },
+
+  "proposed_debt_service": {
+    "new_loan_annual_ds_override": 171095.35,
+    "existing_debt_annual_ds": 6344.16,
+    "total_annual_debt_service_memo": 177439.51,
+    "_note": "G8WAY debt service is amortized at the locked rate. We override the engine's amortizer to match memo-exact DS."
+  },
+
+  "existing_debts": [
+    {
+      "lender": "Seller Note",
+      "balance": 0,
+      "annual_rate": 0,
+      "term_months": 0,
+      "rate_type": "fixed",
+      "annual_payment_override": 6344.16
+    }
+  ],
+
+  "character": {
+    "credit_score_primary": 742,
+    "bankruptcy_last_7yr": false,
+    "felony": false,
+    "tax_liens_unsatisfied": false
+  },
+
+  "memo_ground_truth": {
+    "_description": "Headline numbers from signed G8WAY 3-11-2026. Harness must match within tolerance.",
+    "y1_bank_adjusted_bani": 219001.40,
+    "y2_bank_adjusted_bani": 222271.44,
+    "total_annual_debt_service": 177439.51,
+    "y1_bank_adjusted_borrower_dscr": 1.23,
+    "y2_bank_adjusted_borrower_dscr": 1.25,
+    "minimum_dscr_colony_medical_cre": 1.15
+  }
+}

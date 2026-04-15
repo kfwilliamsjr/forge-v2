@@ -1,0 +1,24 @@
+{
+  "status": "ok",
+  "deal_id": "TARVER_2026-04_HIGH",
+  "engine": "underwriteos.cashflow",
+  "bani": "172800.00",
+  "annual_debt_service": "59050.08",
+  "shocked_annual_debt_service": "66480.48",
+  "borrower_dscr": "2.93",
+  "global_dscr": "2.90",
+  "rate_shock_borrower_dscr": "2.60",
+  "liquidity_ratio": "0.00",
+  "thresholds": {
+    "borrower_dscr_min": "1.25",
+    "global_dscr_min": "1.10",
+    "rate_shock_bps": "300",
+    "post_shock_min": "1.00",
+    "usvi_living_floor": "24000"
+  },
+  "verdicts": {
+    "borrower_dscr": "PASS",
+    "global_dscr": "PASS",
+    "rate_shock": "PASS"
+  }
+}

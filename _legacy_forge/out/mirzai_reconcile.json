@@ -1,0 +1,16 @@
+{
+  "deal_name": "Mirzai Group LLC \u2014 Acquisition of Munchies LLC",
+  "deal_type": "acquisition",
+  "ready": false,
+  "missing_docs": [
+    "business_valuation",
+    "credit_report",
+    "pfs",
+    "use_of_proceeds"
+  ],
+  "null_fields": [
+    "buyer_personal_returns_2yr[2024].agi_line_11",
+    "buyer_personal_returns_2yr[2024].total_income_line_9"
+  ],
+  "warnings": []
+}

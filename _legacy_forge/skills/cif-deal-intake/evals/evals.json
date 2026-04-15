@@ -1,0 +1,23 @@
+{
+  "skill_name": "cif-deal-intake",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Intake Amber Alexander, Festival Loan",
+      "expected_output": "Should recognize Amber Alexander exists in pipeline (status: pending_docs), find her deal folder if it exists, load the Festival Loan 11-item checklist, inventory available docs, mark each as HAVE/MISSING/BLOCKER, create or update deal_data.json, update ACTIVE_PIPELINE.json status, and draft a doc request email to Nikky Cole CC Akem.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "New deal: Zefo's Island Cuisine, VI Leap Grant. They make hot sauces and marinades. $10,000 grant request.",
+      "expected_output": "Should create a new deal folder for Zefo's Island Cuisine, load the VI Leap Grant 10-item checklist, mark all items as MISSING (new deal, no docs yet), create deal_data.json from schema template with deal_type vi_leap_grant and request_amount 10000, add new entry to ACTIVE_PIPELINE.json, and draft doc request email listing all 10 missing items.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "What docs am I missing for JJ Creationz?",
+      "expected_output": "Should find JJ Creationz in pipeline (status: underwriting_complete, memo_delivered), find the existing deal folder, inventory what's there, load the Festival Loan checklist (since that's her deal type), and present a gap analysis showing what's HAVE vs MISSING. Should NOT draft a new doc request email since the deal is already past intake stage — instead note that the deal is in underwriting_complete status.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "_description": "Golden fixture — Mirzai Group LLC dba Munchies Market. Real Colony SBSL deal signed 1-16-2026. SBA 7(a) change-of-ownership acquisition of Salem, OR convenience store. Used as Tier 1 reference: bank-adjusted cash flow + multi-affiliate borrower + committee memo.",
+  "_source_docs": [
+    "knowledge-base/sample-deals/FINAL Loan Report for Mirzai Group LLC_1-16-2026.pdf",
+    "knowledge-base/sample-deals/G8WAY_Mirzai Group LLC dba Munchies_1-16-2026.xlsx"
+  ],
+  "_pii_status": "real numbers from signed memo; guarantor name retained for traceability. Pre-commit: scrub before open-source.",
+  "_reconciled_against_memo": "2026-04-15",
+  "deal_id": "MIRZAI_2026-01",
+  "lane": "cif",
+  "product_type": "regular_loan",
+  "policy_version": "1.0.0",
+
+  "borrower": {
+    "legal_name": "Mirzai Group LLC dba Munchies Market",
+    "entity_type": "LLC",
+    "state": "OR",
+    "industry_label": "convenience_store_acquisition",
+    "industry_naics": "445131",
+    "years_in_business": 1,
+    "owners": [
+      {"name": "Qayoom Abdul Mirzai", "ownership_pct": 1.00, "is_guarantor": true}
+    ]
+  },
+
+  "request": {
+    "deal_type": "change_of_ownership_acquisition",
+    "loan_amount": 352800,
+    "loan_term_months": 120,
+    "rate": 0.095,
+    "rate_type": "variable",
+    "rate_spread_bps": 275,
+    "reference_rate": "WSJ_Prime",
+    "use_of_proceeds": {
+      "business_acquisition": 252800,
+      "inventory": 50000,
+      "working_capital_reserve": 60000,
+      "soft_costs_fees": 7938,
+      "closing_costs": 2062
+    },
+    "equity_injection": 39200,
+    "equity_injection_pct": 0.10
+  },
+
+  "financials_business": {
+    "tax_year": 2026,
+    "scenario": "year_1_projection_bank_adjusted",
+    "gross_revenue": 868000,
+    "cogs": 546840,
+    "gross_profit": 321160,
+    "net_income": 37622,
+    "depreciation": 0,
+    "amortization": 6201,
+    "interest_expense": 32565,
+    "owner_compensation": 0,
+    "owner_compensation_deducted_as_salary_required": 25000,
+    "one_time_expenses": 0,
+    "required_distributions": 119,
+    "rent_paid_to_owner_re": 0
+  },
+
+  "financials_personal": {
+    "w2_income": 38840,
+    "k1_distributions": 147960,
+    "other_income": 147960,
+    "personal_debt_annual": 78060,
+    "living_expenses_annual": 26597,
+    "liquid_assets": 54288,
+    "_note_k1_treatment": "K-1 partnership distributions from affiliates (8030 SE Harold LLC, Ariana Merchant, Ariana Wholesale) treated as other_income for global DSCR. Memo includes affiliate cash flows separately; adapter does not model affiliates."
+  },
+
+  "proposed_debt_service": {
+    "new_loan_annual_ds_memo": 54782,
+    "new_loan_monthly_payment_memo": 4565.15,
+    "existing_debt_annual_ds": 0
+  },
+
+  "guaranty": {
+    "sba_guaranty_pct": 0.75,
+    "sba_guaranty_fee": 7938,
+    "lender_exposure": 88200
+  },
+
+  "character": {
+    "credit_score_primary": 742,
+    "credit_bureau_date": "2025-12-17",
+    "bankruptcy_last_7yr": false,
+    "felony": false,
+    "tax_liens_unsatisfied": false,
+    "historical_delinquencies_30day": 2,
+    "historical_delinquencies_explanation_provided": true
+  },
+
+  "affiliates": [
+    {"name": "8030 SE Harold LLC", "ownership_pct": 0.3333, "type": "real_estate_holding"},
+    {"name": "Ariana Merchant LLC dba Burnside Market & Deli", "ownership_pct": 0.3333, "type": "convenience_store"},
+    {"name": "Ariana Wholesale LLC dba PNW Distribution", "ownership_pct": 0.3333, "type": "wholesaler"},
+    {"name": "Q&Z Enterprises LLC", "ownership_pct": 0.50, "type": "disregarded_entity_no_revenue"}
+  ],
+
+  "memo_ground_truth": {
+    "_description": "Headline numbers from signed memo — harness must match within tolerance.",
+    "y1_bank_adjusted_total_cash_flow": 76268,
+    "y1_bank_adjusted_borrower_dscr": 1.39,
+    "y1_bank_adjusted_global_dscr": 1.63,
+    "y2_bank_adjusted_borrower_dscr": 1.48,
+    "y2_bank_adjusted_global_dscr": 1.64,
+    "annual_debt_service": 54782,
+    "historical_borrower_dscr_2023": 1.33,
+    "historical_borrower_dscr_2024": 1.34,
+    "historical_borrower_dscr_interim_10_2025": 1.39,
+    "minimum_dscr_colony_cre_secured": 1.25,
+    "minimum_dscr_sba_7a": 1.15
+  }
+}

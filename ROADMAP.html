@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SBA Lending Network — Agentic Overhaul Roadmap</title>
+<style>
+  :root{--navy:#1B2E4B;--gold:#C8922A;--teal:#2E8B8B;--red:#c0392b;--green:#27ae60;--bg:#f7f7f5;--ink:#1a1a1a;--mute:#6b6b6b;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+  header{background:var(--navy);color:#fff;padding:32px 48px}
+  header h1{margin:0;font-size:28px;letter-spacing:.5px}
+  header .sub{color:var(--gold);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin-top:6px}
+  header .date{color:#aab;font-size:12px;margin-top:10px}
+  .wrap{max-width:1280px;margin:0 auto;padding:32px 48px}
+  h2{font-size:20px;border-bottom:3px solid var(--gold);padding-bottom:6px;margin-top:40px}
+  h3{font-size:15px;color:var(--navy);margin-bottom:6px;letter-spacing:.3px}
+  .grid{display:grid;gap:16px}
+  .cols-2{grid-template-columns:1fr 1fr}
+  .cols-4{grid-template-columns:repeat(4,1fr)}
+  .card{background:#fff;border:1px solid #e4e4e1;border-radius:8px;padding:16px 18px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  .card.red{border-left:5px solid var(--red)}
+  .card.gold{border-left:5px solid var(--gold)}
+  .card.teal{border-left:5px solid var(--teal)}
+  .card.green{border-left:5px solid var(--green)}
+  .card.navy{border-left:5px solid var(--navy)}
+  .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .pill.now{background:#ffe7e1;color:var(--red)}
+  .pill.next{background:#fff1d9;color:#8a5a00}
+  .pill.later{background:#dff3ea;color:#166e40}
+  .pill.future{background:#e4eaf3;color:var(--navy)}
+  table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e4e4e1}
+  th,td{text-align:left;padding:10px 12px;font-size:13px;border-bottom:1px solid #ededea}
+  th{background:var(--navy);color:#fff;font-weight:600;letter-spacing:.3px}
+  tr:last-child td{border-bottom:none}
+  .muted{color:var(--mute);font-size:12px}
+  .flow{display:flex;align-items:stretch;gap:0;margin:20px 0;overflow-x:auto}
+  .phase{flex:1;min-width:180px;padding:16px;border-right:2px dashed #d0cfc9;position:relative}
+  .phase:last-child{border-right:none}
+  .phase .n{position:absolute;top:-10px;left:12px;background:var(--navy);color:var(--gold);font-weight:700;font-size:12px;padding:2px 10px;border-radius:10px}
+  .phase h4{margin:12px 0 6px;font-size:14px;color:var(--navy)}
+  .phase ul{margin:6px 0 0 16px;padding:0;font-size:12px;color:#333}
+  .phase ul li{margin-bottom:3px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;margin-top:8px}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .stack{display:flex;flex-direction:column;gap:8px}
+  .kv{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px dotted #e4e4e1}
+  .kv:last-child{border-bottom:none}
+  .kv .k{color:var(--mute)}
+  .kv .v{font-weight:600}
+  .callout{background:#fff8e7;border-left:4px solid var(--gold);padding:12px 16px;margin:20px 0;font-size:14px;border-radius:0 6px 6px 0}
+  footer{text-align:center;color:var(--mute);font-size:12px;padding:32px;border-top:1px solid #e4e4e1;margin-top:40px}
+  .arch{display:grid;grid-template-columns:200px 1fr 200px;gap:12px;margin:20px 0}
+  .lane{background:#fff;border:1px solid #e4e4e1;border-radius:6px;padding:12px;font-size:13px}
+  .lane h5{margin:0 0 8px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--gold)}
+  .lane ul{margin:0 0 0 14px;padding:0;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <div class="sub">SBA Lending Network · Swift Capital Underwriting</div>
+  <h1>Agentic Flow Overhaul — Roadmap</h1>
+  <div class="date">Drafted 2026-04-15 · Awaiting approval · Source: Anthropic Agentic Workflow Master Build Guide</div>
+</header>
+
+<div class="wrap">
+
+<div class="callout">
+<strong>One-sentence summary:</strong> Strong domain content, weak agentic scaffolding. This overhaul adds the missing structure — routers, schemas, audit logs, versioning, golden dataset — without rewriting your underwriting expertise.
+</div>
+
+<h2>Where You Are vs. Where the Guide Says You Need to Be</h2>
+<div class="grid cols-2">
+  <div class="card red">
+    <h3>Current State</h3>
+    <ul>
+      <li>8 skills across 3 folders (FORGE, skills/, Swift Capital/)</li>
+      <li>Narrative skill files — no input/output schemas</li>
+      <li>No negative triggers on any skill</li>
+      <li>Multiple skills do 3–4 jobs each (not atomic)</li>
+      <li>No version numbers, no changelogs</li>
+      <li>No router — agent picks skill by guess</li>
+      <li>No audit log — cannot reconstruct past decisions</li>
+      <li>No golden dataset regression testing</li>
+      <li>Policy thresholds hardcoded in skill prose</li>
+    </ul>
+  </div>
+  <div class="card green">
+    <h3>Target State (post-overhaul)</h3>
+    <ul>
+      <li>One skill library: <code>~/Desktop/FORGE/skills/</code></li>
+      <li>Every skill: 5-layer compliant, atomic, versioned</li>
+      <li>Router skill runs first, logs dispatch rationale</li>
+      <li><code>agent.json</code> enforces halt-on-missing-input</li>
+      <li>Append-only audit log per deal</li>
+      <li>7 golden deals for regression testing</li>
+      <li>Policy Engine (YAML) — one edit propagates to all skills</li>
+      <li>6 ops questions answerable in 60 seconds</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Four-Phase Roadmap</h2>
+<div class="flow">
+  <div class="phase">
+    <span class="n">PHASE 1</span>
+    <span class="pill now">Now</span>
+    <h4>Visibility & Audit</h4>
+    <p class="muted">This session · read-only</p>
+    <ul>
+      <li>This audit doc</li>
+      <li>This roadmap</li>
+      <li>Skill registry CSV</li>
+      <li>Zero production changes</li>
+    </ul>
+  </div>
+  <div class="phase">
+    <span class="n">PHASE 2</span>
+    <span class="pill next">Next · 1–2 sessions</span>
+    <h4>Standardize Skills</h4>
+    <p class="muted">Refactor + decompose</p>
+    <ul>
+      <li>Add 5 layers to each skill</li>
+      <li>Split multi-job skills → atomic</li>
+      <li>8 skills → 15–18 skills</li>
+      <li>v1.0 + CHANGELOG.md each</li>
+      <li>Consolidate to one library</li>
+    </ul>
+  </div>
+  <div class="phase">
+    <span class="n">PHASE 3</span>
+    <span class="pill later">Then · 1 session</span>
+    <h4>Router + Agent Config</h4>
+    <p class="muted">Orchestration layer</p>
+    <ul>
+      <li>Build route_task.md</li>
+      <li>Write agent.json</li>
+      <li>Append-only audit JSONL</li>
+      <li>halt_on_missing_input: true</li>
+    </ul>
+  </div>
+  <div class="phase">
+    <span class="n">PHASE 4</span>
+    <span class="pill future">Ongoing · 2–4 wks</span>
+    <h4>Golden + Policy MCP</h4>
+    <p class="muted">Regression + leverage</p>
+    <ul>
+      <li>7 golden deals locked</li>
+      <li>QA protocol (5-question review)</li>
+      <li>Policy Engine YAML v1</li>
+      <li>Weekly improvement loop</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Current Skill Audit (5-Layer Compliance)</h2>
+<table>
+  <thead>
+    <tr><th>Skill</th><th>Trigger</th><th>Neg Trigger</th><th>Input Schema</th><th>Output Schema</th><th>Versioned</th><th>Atomic</th><th>Score</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>sba-deal-screener</td><td>✅</td><td>❌</td><td>⚠️</td><td>❌</td><td>❌</td><td>❌ (3 jobs)</td><td>2/7</td></tr>
+    <tr><td>email-drafter</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>✅</td><td>2/7</td></tr>
+    <tr><td>cif-deal-intake</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌ (3 jobs)</td><td>~1/7</td></tr>
+    <tr><td>cif-cash-flow</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌ (4 jobs)</td><td>~1/7</td></tr>
+    <tr><td>cif-memo-writer</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌ (3 doc types)</td><td>~1/7</td></tr>
+    <tr><td>borrower-prospecting</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>❌ (3 modes)</td><td>~1/7</td></tr>
+    <tr><td>broker-client-intake</td><td>?</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>?</td><td>unknown</td></tr>
+    <tr><td>lead-tiering</td><td>?</td><td>❌</td><td>❌</td><td>❌</td><td>❌</td><td>?</td><td>unknown</td></tr>
+  </tbody>
+</table>
+<p class="muted">FORGE skills not mounted this session — scores inferred from CLAUDE.md descriptions. Confirm next session.</p>
+
+<h2>Proposed Atomic Decomposition</h2>
+<div class="grid cols-2">
+  <div class="card navy">
+    <h3>cif-cash-flow (1 skill) →</h3>
+    <ul>
+      <li>extract_cif_financials</li>
+      <li>calculate_business_cash_flow</li>
+      <li>calculate_global_cash_flow</li>
+      <li>run_stress_tests</li>
+    </ul>
+  </div>
+  <div class="card navy">
+    <h3>cif-memo-writer (1 skill) →</h3>
+    <ul>
+      <li>write_festival_report</li>
+      <li>write_grant_summary</li>
+      <li>write_committee_memo</li>
+    </ul>
+  </div>
+  <div class="card navy">
+    <h3>borrower-prospecting (1 skill) →</h3>
+    <ul>
+      <li>score_inbound_leads</li>
+      <li>mine_bizbuysell_listings</li>
+      <li>rank_outreach_prospects</li>
+    </ul>
+  </div>
+  <div class="card navy">
+    <h3>sba-deal-screener (1 skill) →</h3>
+    <ul>
+      <li>extract_deal_parameters</li>
+      <li>match_colony_grid</li>
+      <li>calculate_broker_commission</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Target Architecture (After Phase 3)</h2>
+<div class="arch">
+  <div class="lane">
+    <h5>Inputs</h5>
+    <ul>
+      <li>Keith's voice/text request</li>
+      <li>Uploaded docs (tax, bank, PFS)</li>
+      <li>Supabase lead forms</li>
+      <li>Email inbox</li>
+    </ul>
+  </div>
+  <div class="lane" style="border-top:4px solid var(--gold)">
+    <h5>Agent Core</h5>
+    <strong style="font-size:13px">route_task.md</strong>
+    <div class="muted" style="font-size:11px;margin-bottom:8px">(always runs first · logs decision)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
+      <div style="background:#f0f4fa;padding:6px;border-radius:4px;font-size:11px"><strong>CIF lane</strong><br>intake → cash flow → memo</div>
+      <div style="background:#f0f4fa;padding:6px;border-radius:4px;font-size:11px"><strong>SBA broker lane</strong><br>extract → grid → commission</div>
+      <div style="background:#f0f4fa;padding:6px;border-radius:4px;font-size:11px"><strong>Prospecting lane</strong><br>score / mine / rank</div>
+      <div style="background:#f0f4fa;padding:6px;border-radius:4px;font-size:11px"><strong>Comms lane</strong><br>email drafter</div>
+    </div>
+    <div style="margin-top:10px;padding:6px 8px;background:#fff8e7;border-radius:4px;font-size:11px">
+      <strong>agent.json:</strong> halt_on_missing_input · log_skill_invocations · require_router_first
+    </div>
+  </div>
+  <div class="lane">
+    <h5>Outputs & Audit</h5>
+    <ul>
+      <li>Credit memo (.docx + .pdf)</li>
+      <li>Cash flow (.xlsx)</li>
+      <li>Draft email (Gmail/Chrome)</li>
+      <li>Ranked lead list</li>
+      <li><strong>audit/{deal_id}.jsonl</strong> (append-only)</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Metrics That Will Be Tracked (Phase 4)</h2>
+<table>
+  <thead><tr><th>Metric</th><th>Formula</th><th>Target</th></tr></thead>
+  <tbody>
+    <tr><td>Skill Accuracy</td><td>Correct outputs ÷ total per skill</td><td>&gt;98%</td></tr>
+    <tr><td>Extraction Accuracy</td><td>Correct fields ÷ total on sample</td><td>&gt;99%</td></tr>
+    <tr><td>Routing Accuracy</td><td>Correct skill ÷ total routing decisions</td><td>&gt;99%</td></tr>
+    <tr><td>Halt Rate</td><td>Halted files ÷ total processed</td><td>Matches manual stop rate</td></tr>
+    <tr><td>Human Correction Rate</td><td>Files corrected ÷ reviewed</td><td>&lt;5% month 1, &lt;2% month 3</td></tr>
+  </tbody>
+</table>
+
+<h2>Out of Scope</h2>
+<div class="grid cols-2">
+  <div class="card teal">
+    <h3>Not touched by this overhaul</h3>
+    <ul>
+      <li>CLAUDE.md narrative memory (kept + add registry pointer)</li>
+      <li>Live deals (Tarver, Amber, JJ Creationz) — overhaul runs parallel</li>
+      <li>ClearPath tool refactor</li>
+      <li>Website / Google Ads</li>
+    </ul>
+  </div>
+  <div class="card teal">
+    <h3>Separate initiatives</h3>
+    <ul>
+      <li>G8WAY xlsx corruption fix (migrate to Sheets or xlsm)</li>
+      <li>8(a) certification workflow</li>
+      <li>Grant application automation</li>
+      <li>ShareFile integration</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Decision Gate</h2>
+<div class="grid cols-4">
+  <div class="card gold"><h3>1</h3><p>Approve Phase 1 scope (done this session)?</p></div>
+  <div class="card gold"><h3>2</h3><p>Mount <code>~/Desktop/FORGE/</code> next session so I can audit real skill files?</p></div>
+  <div class="card gold"><h3>3</h3><p>Approve decomposition plan (8 → ~18 atomic skills)?</p></div>
+  <div class="card gold"><h3>4</h3><p>Reserve 2 sessions this week for Phase 2 execution?</p></div>
+</div>
+
+<footer>Nothing moves to Phase 2 until Keith approves. | SBA Lending Network · Agentic Overhaul v0.1</footer>
+</div>
+</body>
+</html>

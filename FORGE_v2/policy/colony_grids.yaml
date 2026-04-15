@@ -1,0 +1,235 @@
+# Colony Bank SBSL Loan Grids — canonical policy source
+# Last updated: 2026-04-15 | Policy version: 1.0.0
+# Source: Colony Bank SBSL Loan Grids (Approved) - Updated 2025-10-21.pdf + policy revised 3/24/2026
+# This YAML is the SINGLE SOURCE OF TRUTH. No Colony threshold hardcoded in any skill.
+
+policy_version: 1.0.0
+effective_date: 2026-04-15
+source_pdf: "knowledge-base/lender-grids/colony-bank/SBSL Loan Grids (Approved) - Updated 2025-10-21.pdf"
+review_cadence_days: 90
+
+general_requirements:
+  borrower_dscr_min: 1.25
+  global_dscr_min: 1.10
+  liquidity_months_min: 6
+  liquidity_months_max: 12
+  ownership_experience_years_min: 1
+  industry_experience_years_min: 2
+  equity_injection_min: 0.10
+  equity_injection_rent_replacement: 0.00
+  credit_score_min: 675
+  airball_max: 2000000
+  derog_tax_plan_max_years: 1
+  bankruptcy_disqualifier_years: 10
+  rate_shock_bps: 300
+  post_rate_shock_dscr_min: 1.00
+
+appetite_tiers:
+  top_tier:
+    industries: [medical, dental, veterinary, professional, pharmacy, cpa, attorney, therapist]
+    flags: ["CRE-secured ≥75% project costs", "1st lien", "FUND 750+ franchise"]
+  acceptable:
+    industries: [gas_station_branded, hotel_flagged, child_day_care, funeral_home]
+    flags: ["5+ year business strong CF", "FUND 600-749 franchise", "CRE-backed acquisition"]
+  lowest_tier:
+    industries: [car_wash, rv_park, campground, startup_no_cre]
+    flags: ["significant cash flow addbacks", "above-avg guarantor strength required"]
+  not_acceptable:
+    industries: [nursing_home, assisted_living, golf_course, cannabis]
+
+footprint:
+  nationwide_if: "SBA 7(a) or USDA with ≥70% guaranty"
+  southeast_only_states: [GA, FL, AL, SC, NC, TN, MS, LA, TX, AR, KY, VA, MD, DC]
+  california_exception: "Gas station/C-store OR hotel, AND $0 NRB"
+
+collateral_margins:
+  sba:
+    improved_re: 0.85
+    unimproved_re: 0.50
+    new_me: 0.75
+    used_me_nbv: 0.50
+    used_me_olv: 0.80
+    furniture_fixtures: 0.10
+  usda:
+    improved_re: 0.85
+    unimproved_re: 0.65
+    new_me_ff: 0.75
+    used_me_ff: 0.50
+
+grids:
+  # Industry-specific grids — skill match_colony_grid resolves these by industry + purpose
+  medical_professional_sba:
+    industries: [medical, dental, veterinary, optometry, physical_therapy, occupational_therapy, speech_therapy, cpa, attorney]
+    purposes:
+      start_up:
+        borrower_dscr: 1.15
+        global_dscr: 1.10
+        ltc_max: 0.90
+        equity_injection: 0.10
+        liquidity_months: 3
+        nrb_max: 200000
+        credit_min: 675
+      buy_sell:
+        borrower_dscr: 1.15
+        global_dscr: 1.10
+        ltc_max: 0.90
+        equity_injection: 0.10
+        liquidity_months: 3
+        nrb_max: 290000
+      expansion:
+        borrower_dscr: 1.15
+        global_dscr: 1.10
+        ltc_max: 1.00
+        equity_injection: 0.00
+        liquidity_months: 3
+        nrb_max: 400000
+      debt_refi:
+        borrower_dscr: 1.15
+        global_dscr: 1.10
+        ltc_max: 1.00
+        equity_injection: 0.00
+        liquidity_months: 3
+        nrb_max: 400000
+
+  medical_professional_portfolio:
+    purposes:
+      buy_sell:
+        borrower_dscr: 1.25
+        global_dscr: 1.20
+        ltc_max: 0.90
+        equity_injection: 0.10
+        liquidity_months: 6
+        airball_max: 1600000
+        unguaranteed_risk_25pct: 400000
+
+  pharmacy:
+    purposes:
+      start_up:
+        borrower_dscr: 1.25
+        global_dscr: 1.10
+        ltc_max: 0.90
+        equity_injection: 0.10
+        liquidity_months: 12
+        nrb_max: 100000
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 12, nrb_max: 290000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 3, nrb_max: 400000}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 3, nrb_max: 400000}
+    notes: "Medicare revenue reliance may impact liquidity"
+
+  gas_station:
+    notes: "National brand preferable; fuel supply agreement preferable; multi-dispenser"
+    start_up_refer_to: general
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 3, nrb_max: 170000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 3, nrb_max: 170000}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 3, nrb_max: 170000}
+
+  hotel:
+    notes: "Interior corridor; national flag; 60-150 rooms preferred; pari-passu available"
+    start_up_refer_to: general_not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.85, equity_injection: 0.15, liquidity_months: 3}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 3}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 3}
+    pari_passu:
+      pricing_min_bps: 150   # Prime + 1.50%
+      ltv_85: [1, 1000000]
+      ltv_80: [1000001, 2000000]
+      ltv_75: [2000001, 4000000]
+
+  child_day_care:
+    start_up_refer_to: general_not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.85, equity_injection: 0.15, liquidity_months: 6, nrb_max: 170000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 6}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 200000}
+
+  funeral_home:
+    start_up_refer_to: general_not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.20, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 12, nrb_max: 170000}
+      expansion: {borrower_dscr: 1.20, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 3}
+      debt_refi: {borrower_dscr: 1.20, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 3, nrb_max: 260000}
+
+  car_wash:
+    notes: "Tunnel preferred"
+    purposes:
+      start_up: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 12, nrb_max: 100000}
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 12, nrb_max: 170000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 6}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 200000}
+
+  rv_park:
+    start_up_refer_to: not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 6, nrb_max: 170000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 6}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 200000}
+
+  franchise_tier_1_fund_750_plus:
+    excludes: [medical, pharmacy, hotel, gas_station, car_wash, rv_park, self_storage]
+    purposes:
+      start_up: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9, nrb_max: 260000}
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9, nrb_max: 260000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 290000}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 290000}
+
+  franchise_tier_2_fund_650_749:
+    purposes:
+      start_up: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9, nrb_max: 260000}
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9, nrb_max: 260000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 290000}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 290000}
+
+  franchise_tier_3_fund_600_649:
+    start_up_refer_to: not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9, nrb_max: 50000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 9, nrb_max: 200000}
+
+  business_loans_acquisition:
+    notes: "Min 5 years in business. Excludes cannabis. If NRB >$150K: PANW ≥20% of loan"
+    start_up_refer_to: general_not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.20, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 6, nrb_max: 260000, nrb_max_transfer: 150000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.20, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 6}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.20, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 6, nrb_max: 290000}
+
+  cre_secured:
+    notes: "1st lien on CRE = 75%+ of total project costs. Self-storage, event centers (large MSA) OK. Non-special-purpose."
+    purposes:
+      start_up: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 12, nrb_max: 0}
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 12, nrb_max: 0}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 9, nrb_max: 100000}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.10, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 9, nrb_max: 100000}
+
+  general:
+    notes: "All loans not in a separate grid. Excludes cannabis. If NRB >$150K: PANW ≥20% of loan"
+    start_up_refer_to: not_desirable
+    purposes:
+      buy_sell: {borrower_dscr: 1.25, global_dscr: 1.20, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 18, nrb_max: 50000}
+      expansion: {borrower_dscr: 1.25, global_dscr: 1.20, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 18}
+      debt_refi: {borrower_dscr: 1.25, global_dscr: 1.20, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 9, nrb_max: 170000}
+
+  general_ci_portfolio:
+    notes: "In-market portfolio loans. Excludes cannabis."
+    purposes:
+      buy_sell: {borrower_dscr: 1.35, global_dscr: 1.20, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9, airball_max: 1200000, unguaranteed_risk_25pct: 300000}
+      expansion: {borrower_dscr: 1.35, global_dscr: 1.20, ltc_max: 0.90, equity_injection: 0.10, liquidity_months: 9}
+      debt_refi: {borrower_dscr: 1.35, global_dscr: 1.20, ltc_max: 1.00, equity_injection: 0.00, liquidity_months: 9}
+
+grid_selection_priority:
+  - "Industry-specific grid (medical, pharmacy, gas, hotel, etc.)"
+  - "Franchise grid by FUND tier"
+  - "CRE-Secured if 1st lien CRE ≥75% project cost"
+  - "Business Loans (Acquisition) if ≥5yr business"
+  - "General / Non-Specialty"
+
+lending_authority:
+  credit_manager: {tier1_no_exception: 4000000, tier2_with_exception: 2000000, unsecured: 200000}
+  asst_credit_manager: {tier1: 1500000, tier2: 750000, unsecured: 100000}
+  vp_underwriter: {tier1: 500000, tier2: 250000, unsecured: 75000}
+  discretionary_small_loan_program: 150000
+  sbsl_loan_committee_required_above_cm: "3 yes votes"
+  executive_loan_committee_threshold: 8000000

@@ -1,0 +1,141 @@
+{
+  "_schema_version": "1.0",
+  "_description": "Structured deal data for Amber Alexander Festival Loan intake.",
+  "_intake_date": "2026-04-10",
+
+  "deal_id": "amber-alexander",
+  "borrower": {
+    "name": "Amber Alexander",
+    "entity_type": null,
+    "ein": null,
+    "state_of_formation": null,
+    "date_established": null,
+    "industry": "Festival/Carnival Vendor",
+    "naics": null,
+    "address": null,
+    "phone": null,
+    "email": null
+  },
+  "owner": {
+    "name": "Amber Alexander",
+    "ownership_pct": 100,
+    "ssn_last4": null,
+    "dob": null,
+    "citizenship": null,
+    "credit_scores": {
+      "transunion": null,
+      "experian": null,
+      "equifax": null
+    }
+  },
+  "request": {
+    "deal_type": "festival_loan",
+    "amount": null,
+    "use_of_proceeds": "Booth #33 — St. Thomas Carnival vendor operations",
+    "term_months": null,
+    "rate": null
+  },
+  "financials": {
+    "annual_revenue": null,
+    "cogs": null,
+    "operating_expenses": null,
+    "net_income": null,
+    "personal_wages": null,
+    "personal_other_income": null,
+    "personal_taxes": null,
+    "personal_living_expenses": null,
+    "personal_debt_service": null,
+    "total_assets": null,
+    "total_liabilities": null,
+    "net_worth": null,
+    "liquid_assets": null
+  },
+  "cash_flow": {
+    "business_net": null,
+    "personal_net": null,
+    "global_cash_available": null,
+    "annual_debt_service": null,
+    "dscr_base": null,
+    "dscr_stress_personal_debt_2x": null,
+    "dscr_stress_living_1_5x": null,
+    "dscr_stress_combined": null,
+    "dscr_stress_severe": null,
+    "dscr_pass": null
+  },
+  "checklist": {
+    "loan_application": {
+      "status": "missing",
+      "notes": "Festival Loan Application Form — pull from ShareFile"
+    },
+    "readiness_form": {
+      "status": "missing",
+      "notes": "Festival Readiness Assessment Form — pull from ShareFile"
+    },
+    "credit_report": {
+      "status": "missing",
+      "notes": "Uploaded to ShareFile 3/31/2026 by Nikky Cole — not yet pulled to local folder"
+    },
+    "photo_id": {
+      "status": "missing",
+      "notes": "Driver's license (front & back) — pull from ShareFile"
+    },
+    "entity_docs": {
+      "status": "missing",
+      "notes": "Entity documents (if applicable) — pull from ShareFile"
+    },
+    "business_license": {
+      "status": "missing",
+      "notes": "Business license (if applicable) — pull from ShareFile"
+    },
+    "w9": {
+      "status": "missing",
+      "notes": "W-9 form — pull from ShareFile"
+    },
+    "bank_statements": {
+      "status": "missing",
+      "notes": "3 months business + 3 months personal bank statements — pull from ShareFile"
+    },
+    "tax_returns": {
+      "status": "missing",
+      "notes": "Most recent tax return (personal or business) — pull from ShareFile"
+    },
+    "pfs": {
+      "status": "missing",
+      "notes": "Personal Financial Statement — pull from ShareFile"
+    },
+    "vendor_invoices": {
+      "status": "missing",
+      "notes": "Vendor invoices / cost estimates for booth setup — pull from ShareFile"
+    }
+  },
+  "blockers": [
+    "Loan Application Form",
+    "Festival Readiness Assessment Form",
+    "Credit Report",
+    "Photo ID",
+    "Tax Returns"
+  ],
+  "five_cs": {
+    "character": "Pending credit report review",
+    "capacity": "Pending revenue documentation",
+    "capital": "Pending financial statement review",
+    "collateral": "Festival/carnival vendor product — may not require traditional collateral",
+    "conditions": "Booth confirmation required (#33, St. Thomas Carnival 2026)"
+  },
+  "risk_rating": "Pending document review",
+  "recommendation": "Pending document review",
+  "conditions": [
+    "Booth receipt or confirmation for Booth #33",
+    "Credit report review completion",
+    "DSCR analysis (1.25x minimum) upon receipt of tax returns / P&L"
+  ],
+  "status": "intake",
+  "dates": {
+    "intake": "2026-04-10",
+    "docs_complete": null,
+    "cash_flow_built": null,
+    "memo_drafted": null,
+    "memo_delivered": null,
+    "committee_decision": null
+  }
+}

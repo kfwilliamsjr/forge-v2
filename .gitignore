@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Local audit artifacts (regenerable — do not version)
+portfolio/PORTFOLIO.html
+portfolio/signals_log.txt
+portfolio/unmatched_threads.log
+FORGE_v2/golden/audit/nightly.log
+
+# Borrower PII — NEVER commit
+**/deal_data_raw/
+**/*tax_return*.pdf
+**/*credit_report*.pdf
+**/*bank_statement*.pdf
+**/*PFS*.pdf
+**/SSN*
+**/*.p12
+
+# Decisions log is local record only (appended by promote_deal)
+portfolio/decisions.log.jsonl
+portfolio/pending_updates.json
+
+# LibreOffice lock files
+.~lock.*#
+
+# Legacy embedded repo — do not track (contains its own .git)
+_legacy_forge/underwriteos/

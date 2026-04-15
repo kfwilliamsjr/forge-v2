@@ -1,0 +1,91 @@
+{
+  "deal_id": "TARVER_2026-04",
+  "lane": "sba_broker",
+  "policy_version": "1.0.0",
+  "created": "2026-04-15",
+  "source_of_record": "Broker_Clients/Tarver_Post_Homes/00_DEAL_SUMMARY.md",
+
+  "borrower": {
+    "legal_name": "Post Homes SL MGMT LLC",
+    "legal_name_verified": false,
+    "entity_type": "LLC",
+    "state": "KS",
+    "city": "Coffeyville",
+    "industry_label": "sober_living_recovery_housing",
+    "industry_naics": "623220",
+    "years_in_business": 1
+  },
+
+  "guarantor": {
+    "name": "Christie Tarver",
+    "phone": "619-405-3437",
+    "credit_score_self_reported": 700,
+    "credit_pulled": false,
+    "va_disability_income_annual": 110000,
+    "va_disability_taxable": false,
+    "va_disability_rating_pct_verified": false,
+    "personal_debt_monthly": 1000,
+    "liquid_assets_est": null,
+    "primary_residence_owned_free_clear": true,
+    "bankruptcy_last_7yr": null,
+    "felony": null,
+    "tax_liens_unsatisfied": null
+  },
+
+  "request": {
+    "deal_type": "expansion_working_capital",
+    "loan_amount_range_low": 350000,
+    "loan_amount_range_high": 600000,
+    "loan_amount_recommended": 350000,
+    "loan_amount_locked": true,
+    "loan_amount_lock_reason": "Keith decision 2026-04-15: conservative sizing until payer mix + guarantor experience documented"
+    "use_of_proceeds": {
+      "working_capital": "unspecified",
+      "hiring": "unspecified",
+      "equipment": "unspecified",
+      "building_improvements": "unspecified"
+    },
+    "collateral": {
+      "cre_value_est": 400000,
+      "cre_owned_free_clear": true,
+      "primary_residence_value_est": null
+    },
+    "equity_injection_already_in": 350000
+  },
+
+  "revenue_model": {
+    "low_case_annual": 126000,
+    "high_case_annual": 345600,
+    "payer_mix_documented": false,
+    "referral_source": "Healthy Connections (verbal only — unwritten)"
+  },
+
+  "broker": {
+    "service_level": "real_estate",
+    "commission_rate": 0.02,
+    "form_159_required": true,
+    "engagement_signed": false
+  },
+
+  "tier_classification_preliminary": 2,
+  "status": "intake_underway",
+  "stage": "doc_collection",
+  "next_actions_keith": [
+    "Document Christie Tarver's sober-living / healthcare operating experience (this week)",
+    "Verify entity name on KS SOS",
+    "Pull tri-merge credit",
+    "Obtain payer mix documentation (insurance contracts / grant agreements)",
+    "Confirm licensing timeline with KS authority",
+    "Convert Healthy Connections verbal → written referral agreement",
+    "Collect VA award letter (rating pct + permanence)",
+    "Verify C of O on church-to-residential conversion",
+    "Document $350K equity injection seasoning (2mo bank statements)"
+  ],
+  "lender_shortlist": ["Newtek_Bank", "Celtic_Bank", "Readycap_Lending"],
+  "lender_declines": [
+    {"lender": "Live_Oak_Bank", "date": "2026-04-15", "reason": "Deal too small + prefers experienced operators", "verbal_only": true}
+  ],
+  "guarantor_experience_status": "pending_keith_this_week",
+  "colony_excluded": true,
+  "colony_exclusion_reason": "Keith is W-2 VP-Underwriter at Colony Bank SBSL — employment conflict"
+}
